@@ -104,7 +104,11 @@ export function AppSidebar() {
               <SidebarMenu className="gap-0.5">
                 {group.items.map((item) => {
                   const active =
-                    item.url === "/" ? path === "/" : path.startsWith(item.url);
+                    item.url === "/"
+                      ? path === "/"
+                      : item.url.startsWith("/biblioteca")
+                        ? path.startsWith("/biblioteca")
+                        : path.startsWith(item.url);
                   return (
                     <SidebarMenuItem key={item.url}>
                       <SidebarMenuButton
