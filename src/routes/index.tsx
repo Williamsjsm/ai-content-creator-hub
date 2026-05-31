@@ -1,0 +1,434 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+import {
+  Sparkles,
+  Video,
+  Image as ImageIcon,
+  TrendingUp,
+  Wand2,
+  Workflow,
+  FolderKanban,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  Plug,
+} from "lucide-react";
+import {
+  Activity,
+  Lightbulb,
+  CalendarClock,
+  Brain,
+  Clapperboard,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/page-header";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Dashboard — AI Content Studio" },
+      { name: "description", content: "Plataforma privada de creación de contenido con IA." },
+    ],
+  }),
+  component: Index,
+});
+
+const quickActions = [
+  { title: "Generador de Prompts", to: "/crear/prompts", icon: Wand2, desc: "Crear prompts por categoría" },
+  { title: "Imagen IA", to: "/crear/imagen", icon: ImageIcon, desc: "Generar imágenes con IA" },
+  { title: "Video IA", to: "/crear/video", icon: Video, desc: "Generar videos cortos" },
+  { title: "Flow Center", to: "/crear/flow", icon: Workflow, desc: "Editar y extender video" },
+];
+
+const recentProjects = [
+  { name: "Frutas IA — Pitahaya", updated: "hace 2h", status: "En progreso" },
+  { name: "Restauraciones vintage", updated: "ayer", status: "Borrador" },
+  { name: "Historias virales", updated: "hace 3 días", status: "Listo" },
+];
+
+const integrationsStatus = [
+  { name: "ChatGPT", connected: true },
+  { name: "Google AI Studio", connected: true },
+  { name: "Flow", connected: false },
+  { name: "YouTube", connected: false },
+  { name: "TikTok", connected: false },
+];
+
+const commandCenter = {
+  activeProject: {
+    name: "Frutas IA — Pitahaya",
+    status: "En progreso",
+    lastActivity: "hace 2 horas",
+  },
+  trend: {
+    category: "Frutas medicinales IA",
+    viral: 94,
+    label: "Potencial viral",
+  },
+  idea: {
+    idea: "Serie de 8s: 'Pitahaya que cura'",
+    reason: "El nicho de frutas medicinales crece +212% esta semana en TikTok.",
+  },
+  production: {
+    project: "Restauraciones vintage",
+    status: "Renderizando 70%",
+  },
+  nextPublish: {
+    platform: "TikTok",
+    date: "Hoy · 19:30",
+    status: "Programada",
+  },
+  insight: "Los videos de Pitahaya tienen mejor rendimiento que el resto del catálogo.",
+};
+
+function Index() {
+  return (
+    <div className="mx-auto w-full max-w-[1440px] space-y-10 p-5 sm:p-8 lg:space-y-12 xl:p-12">
+      <PageHeader
+        title="Bienvenido de nuevo"
+        subtitle="Tu estudio personal de creación de contenido con IA."
+        actions={
+          <Button
+            asChild
+            className="h-10 rounded-xl bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-glow)] transition-all hover:scale-[1.02] hover:opacity-95"
+          >
+            <Link to="/crear/prompts">
+              <Sparkles className="mr-2 h-4 w-4" strokeWidth={2.2} />
+              Crear nuevo
+            </Link>
+          </Button>
+        }
+      />
+
+      {/* Centro de Mando Inteligente */}
+      <section className="space-y-5">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70">
+          Centro de mando
+        </h2>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {/* 1 — Proyecto Activo */}
+          <Card className="surface-card hover-lift animate-fade-in">
+            <CardHeader className="relative flex flex-row items-center gap-2 pb-2">
+              <FolderKanban className="h-4 w-4 text-primary" strokeWidth={2.2} />
+              <CardTitle className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                Proyecto activo
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="relative space-y-2">
+              <p className="text-[17px] font-semibold tracking-tight">
+                {commandCenter.activeProject.name}
+              </p>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="border-primary/30 bg-primary/10 text-[10.5px] font-medium uppercase tracking-wider text-primary">
+                  {commandCenter.activeProject.status}
+                </Badge>
+                <span className="text-[11.5px] text-muted-foreground">
+                  Última actividad {commandCenter.activeProject.lastActivity}
+                </span>
+              </div>
+              <Button asChild size="sm" variant="secondary" className="mt-3 h-9 w-full rounded-xl">
+                <Link to="/biblioteca/proyectos">
+                  Abrir proyecto <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* 2 — Tendencia del Día */}
+          <Card className="surface-card hover-lift animate-fade-in" style={{ animationDelay: "60ms" }}>
+            <CardHeader className="relative flex flex-row items-center gap-2 pb-2">
+              <TrendingUp className="h-4 w-4 text-primary" strokeWidth={2.2} />
+              <CardTitle className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                Tendencia del día
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="relative space-y-3">
+              <p className="text-[17px] font-semibold tracking-tight">
+                {commandCenter.trend.category}
+              </p>
+              <div>
+                <div className="mb-1 flex items-center justify-between text-[11.5px] text-muted-foreground">
+                  <span>{commandCenter.trend.label}</span>
+                  <span className="font-medium text-primary">{commandCenter.trend.viral}%</span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted/40">
+                  <div className="h-full rounded-full bg-[image:var(--gradient-primary)]" style={{ width: `${commandCenter.trend.viral}%` }} />
+                </div>
+              </div>
+              <Button asChild size="sm" variant="secondary" className="mt-1 h-9 w-full rounded-xl">
+                <Link to="/investigar/tendencias">
+                  Explorar tendencias <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* 3 — Idea Recomendada por IA */}
+          <Card className="surface-card hover-lift animate-fade-in" style={{ animationDelay: "120ms" }}>
+            <CardHeader className="relative flex flex-row items-center gap-2 pb-2">
+              <Lightbulb className="h-4 w-4 text-primary" strokeWidth={2.2} />
+              <CardTitle className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                Idea recomendada por IA
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="relative space-y-2">
+              <p className="text-[16px] font-semibold leading-snug tracking-tight">
+                {commandCenter.idea.idea}
+              </p>
+              <p className="text-[12px] leading-relaxed text-muted-foreground">
+                {commandCenter.idea.reason}
+              </p>
+              <Button asChild size="sm" className="mt-3 h-9 w-full rounded-xl">
+                <Link to="/crear/prompts">
+                  <Wand2 className="mr-1.5 h-3.5 w-3.5" /> Crear prompt
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* 4 — Video en Producción */}
+          <Card className="surface-card hover-lift animate-fade-in" style={{ animationDelay: "180ms" }}>
+            <CardHeader className="relative flex flex-row items-center gap-2 pb-2">
+              <Clapperboard className="h-4 w-4 text-primary" strokeWidth={2.2} />
+              <CardTitle className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                Video en producción
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="relative space-y-2">
+              <p className="text-[17px] font-semibold tracking-tight">
+                {commandCenter.production.project}
+              </p>
+              <Badge variant="outline" className="border-secondary/30 bg-secondary/10 text-[10.5px] font-medium uppercase tracking-wider text-secondary">
+                {commandCenter.production.status}
+              </Badge>
+              <Button asChild size="sm" variant="secondary" className="mt-3 h-9 w-full rounded-xl">
+                <Link to="/crear/flow">
+                  <Workflow className="mr-1.5 h-3.5 w-3.5" /> Abrir Flow Center
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* 5 — Próxima Publicación */}
+          <Card className="surface-card hover-lift animate-fade-in" style={{ animationDelay: "240ms" }}>
+            <CardHeader className="relative flex flex-row items-center gap-2 pb-2">
+              <CalendarClock className="h-4 w-4 text-primary" strokeWidth={2.2} />
+              <CardTitle className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                Próxima publicación
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="relative space-y-2">
+              <p className="text-[17px] font-semibold tracking-tight">
+                {commandCenter.nextPublish.platform}
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="text-[12.5px] text-muted-foreground">
+                  {commandCenter.nextPublish.date}
+                </span>
+                <Badge variant="outline" className="border-primary/30 bg-primary/10 text-[10.5px] font-medium uppercase tracking-wider text-primary">
+                  {commandCenter.nextPublish.status}
+                </Badge>
+              </div>
+              <Button asChild size="sm" variant="secondary" className="mt-3 h-9 w-full rounded-xl">
+                <Link to="/publicar">
+                  Ver calendario <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* 6 — Insight Principal */}
+          <Card className="surface-card relative overflow-hidden hover-lift animate-fade-in" style={{ animationDelay: "300ms" }}>
+            <div className="ambient-blob -right-10 -top-10 h-44 w-44 bg-primary" />
+            <CardHeader className="relative flex flex-row items-center gap-2 pb-2">
+              <Brain className="h-4 w-4 text-primary" strokeWidth={2.2} />
+              <CardTitle className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                Insight principal
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="relative space-y-3">
+              <p className="text-[16px] font-semibold leading-snug tracking-tight">
+                "{commandCenter.insight}"
+              </p>
+              <Button asChild size="sm" variant="secondary" className="h-9 w-full rounded-xl">
+                <Link to="/investigar/aprendizaje">
+                  <Activity className="mr-1.5 h-3.5 w-3.5" /> Ver aprendizaje
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {[
+          { label: "Proyectos", value: "12", icon: FolderKanban },
+          { label: "Prompts", value: "84", icon: Wand2 },
+          { label: "Imágenes", value: "237", icon: ImageIcon },
+          { label: "Videos", value: "48", icon: Video },
+        ].map((s, i) => (
+          <Card
+            key={s.label}
+            className="surface-card hover-lift animate-fade-in"
+            style={{ animationDelay: `${i * 60}ms` }}
+          >
+            <CardContent className="relative flex items-center justify-between p-5">
+              <div className="space-y-2">
+                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground/70">
+                  {s.label}
+                </p>
+                <p className="text-[32px] font-semibold leading-none tracking-tight tabular-nums">
+                  {s.value}
+                </p>
+              </div>
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/20">
+                <s.icon className="h-[18px] w-[18px]" strokeWidth={2} />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Quick actions */}
+      <section className="space-y-5">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70">
+          Accesos rápidos
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {quickActions.map((a, i) => (
+            <Link key={a.to} to={a.to} className="block">
+              <Card
+                className="group surface-card hover-lift h-full animate-fade-in cursor-pointer"
+                style={{ animationDelay: `${i * 60}ms` }}
+              >
+                <CardContent className="relative p-5">
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/15 text-secondary ring-1 ring-inset ring-secondary/25 transition-transform duration-300 group-hover:scale-110">
+                    <a.icon className="h-[18px] w-[18px]" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-[14.5px] font-semibold tracking-tight">{a.title}</h3>
+                  <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">
+                    {a.desc}
+                  </p>
+                  <div className="mt-4 flex items-center text-[11px] font-medium text-primary opacity-0 -translate-x-1 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                    Abrir <ArrowRight className="ml-1 h-3 w-3" />
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <div className="grid gap-5 lg:grid-cols-3">
+        {/* Recent projects */}
+        <Card className="surface-card lg:col-span-2">
+          <CardHeader className="relative flex flex-row items-center justify-between pb-3">
+            <CardTitle className="text-[15px] font-semibold tracking-tight">
+              Últimos proyectos
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 text-muted-foreground hover:text-foreground"
+              asChild
+            >
+              <Link to="/biblioteca/proyectos">Ver todos</Link>
+            </Button>
+          </CardHeader>
+          <CardContent className="relative space-y-2">
+            {recentProjects.map((p) => (
+              <div
+                key={p.name}
+                className="group flex items-center justify-between rounded-xl border border-border/40 bg-background/30 p-3 transition-all duration-200 hover:border-border hover:bg-accent/40"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary/15 text-secondary ring-1 ring-inset ring-secondary/25">
+                    <FolderKanban className="h-4 w-4" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <p className="text-[13.5px] font-medium tracking-tight">{p.name}</p>
+                    <p className="text-[11.5px] text-muted-foreground">{p.updated}</p>
+                  </div>
+                </div>
+                <Badge
+                  variant="outline"
+                  className="border-border/60 bg-muted/40 text-[10.5px] font-medium uppercase tracking-wider text-muted-foreground"
+                >
+                  {p.status}
+                </Badge>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Tendencia del día */}
+        <Card className="surface-card relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-subtle opacity-40" />
+          <div className="ambient-blob -right-10 -top-10 h-44 w-44 bg-primary" />
+          <CardHeader className="relative pb-3">
+            <CardTitle className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+              <TrendingUp className="h-3.5 w-3.5 text-primary" strokeWidth={2.4} />
+              Tendencia del día
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="relative">
+            <p className="text-[18px] font-semibold leading-snug tracking-tight">
+              Videos cortos de frutas IA con narración
+            </p>
+            <p className="mt-2.5 text-[12px] text-muted-foreground">
+              Ranking #3 · TikTok ·{" "}
+              <span className="font-medium text-primary">+212%</span> vs. semana pasada
+            </p>
+            <Button asChild size="sm" className="mt-6 h-9 w-full rounded-xl" variant="secondary">
+              <Link to="/investigar/tendencias">
+                Explorar tendencias
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Integration status */}
+      <Card className="surface-card">
+        <CardHeader className="relative flex flex-row items-center justify-between pb-3">
+          <CardTitle className="flex items-center gap-2 text-[15px] font-semibold tracking-tight">
+            <Plug className="h-4 w-4 text-primary" strokeWidth={2.2} />
+            Estado de integraciones
+          </CardTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 text-muted-foreground hover:text-foreground"
+            asChild
+          >
+            <Link to="/integraciones">Gestionar</Link>
+          </Button>
+        </CardHeader>
+        <CardContent className="relative">
+          <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {integrationsStatus.map((i) => (
+              <div
+                key={i.name}
+                className="flex items-center justify-between rounded-xl border border-border/40 bg-background/30 px-3.5 py-3 transition-all duration-200 hover:border-border hover:bg-accent/40"
+              >
+                <span className="text-[13px] font-medium">{i.name}</span>
+                {i.connected ? (
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_oklch(0.79_0.155_70)]" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-primary" strokeWidth={2.4} />
+                  </div>
+                ) : (
+                  <XCircle className="h-3.5 w-3.5 text-muted-foreground/50" strokeWidth={2} />
+                )}
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
