@@ -1,19 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Sparkles,
-  Video,
-  Image as ImageIcon,
   TrendingUp,
   Wand2,
   Workflow,
   FolderKanban,
   ArrowRight,
-  CheckCircle2,
-  XCircle,
-  Plug,
-} from "lucide-react";
-import {
   Activity,
   Lightbulb,
   CalendarClock,
@@ -34,27 +26,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
-
-const quickActions = [
-  { title: "Generador de Prompts", to: "/crear/prompts", icon: Wand2, desc: "Crear prompts por categoría" },
-  { title: "Imagen IA", to: "/crear/imagen", icon: ImageIcon, desc: "Generar imágenes con IA" },
-  { title: "Video IA", to: "/crear/video", icon: Video, desc: "Generar videos cortos" },
-  { title: "Flow Center", to: "/crear/flow", icon: Workflow, desc: "Editar y extender video" },
-];
-
-const recentProjects = [
-  { name: "Frutas IA — Pitahaya", updated: "hace 2h", status: "En progreso" },
-  { name: "Restauraciones vintage", updated: "ayer", status: "Borrador" },
-  { name: "Historias virales", updated: "hace 3 días", status: "Listo" },
-];
-
-const integrationsStatus = [
-  { name: "ChatGPT", connected: true },
-  { name: "Google AI Studio", connected: true },
-  { name: "Flow", connected: false },
-  { name: "YouTube", connected: false },
-  { name: "TikTok", connected: false },
-];
 
 const commandCenter = {
   activeProject: {
@@ -261,174 +232,6 @@ function Index() {
           </Card>
         </div>
       </section>
-
-      {/* Stats */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {[
-          { label: "Proyectos", value: "12", icon: FolderKanban },
-          { label: "Prompts", value: "84", icon: Wand2 },
-          { label: "Imágenes", value: "237", icon: ImageIcon },
-          { label: "Videos", value: "48", icon: Video },
-        ].map((s, i) => (
-          <Card
-            key={s.label}
-            className="surface-card hover-lift animate-fade-in"
-            style={{ animationDelay: `${i * 60}ms` }}
-          >
-            <CardContent className="relative flex items-center justify-between p-5">
-              <div className="space-y-2">
-                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground/70">
-                  {s.label}
-                </p>
-                <p className="text-[32px] font-semibold leading-none tracking-tight tabular-nums">
-                  {s.value}
-                </p>
-              </div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/20">
-                <s.icon className="h-[18px] w-[18px]" strokeWidth={2} />
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Quick actions */}
-      <section className="space-y-5">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70">
-          Accesos rápidos
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {quickActions.map((a, i) => (
-            <Link key={a.to} to={a.to} className="block">
-              <Card
-                className="group surface-card hover-lift h-full animate-fade-in cursor-pointer"
-                style={{ animationDelay: `${i * 60}ms` }}
-              >
-                <CardContent className="relative p-5">
-                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/15 text-secondary ring-1 ring-inset ring-secondary/25 transition-transform duration-300 group-hover:scale-110">
-                    <a.icon className="h-[18px] w-[18px]" strokeWidth={2} />
-                  </div>
-                  <h3 className="text-[14.5px] font-semibold tracking-tight">{a.title}</h3>
-                  <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">
-                    {a.desc}
-                  </p>
-                  <div className="mt-4 flex items-center text-[11px] font-medium text-primary opacity-0 -translate-x-1 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                    Abrir <ArrowRight className="ml-1 h-3 w-3" />
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <div className="grid gap-5 lg:grid-cols-3">
-        {/* Recent projects */}
-        <Card className="surface-card lg:col-span-2">
-          <CardHeader className="relative flex flex-row items-center justify-between pb-3">
-            <CardTitle className="text-[15px] font-semibold tracking-tight">
-              Últimos proyectos
-            </CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 text-muted-foreground hover:text-foreground"
-              asChild
-            >
-              <Link to="/biblioteca/proyectos">Ver todos</Link>
-            </Button>
-          </CardHeader>
-          <CardContent className="relative space-y-2">
-            {recentProjects.map((p) => (
-              <div
-                key={p.name}
-                className="group flex items-center justify-between rounded-xl border border-border/40 bg-background/30 p-3 transition-all duration-200 hover:border-border hover:bg-accent/40"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary/15 text-secondary ring-1 ring-inset ring-secondary/25">
-                    <FolderKanban className="h-4 w-4" strokeWidth={2} />
-                  </div>
-                  <div>
-                    <p className="text-[13.5px] font-medium tracking-tight">{p.name}</p>
-                    <p className="text-[11.5px] text-muted-foreground">{p.updated}</p>
-                  </div>
-                </div>
-                <Badge
-                  variant="outline"
-                  className="border-border/60 bg-muted/40 text-[10.5px] font-medium uppercase tracking-wider text-muted-foreground"
-                >
-                  {p.status}
-                </Badge>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        {/* Tendencia del día */}
-        <Card className="surface-card relative overflow-hidden">
-          <div className="absolute inset-0 bg-grid-subtle opacity-40" />
-          <div className="ambient-blob -right-10 -top-10 h-44 w-44 bg-primary" />
-          <CardHeader className="relative pb-3">
-            <CardTitle className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-              <TrendingUp className="h-3.5 w-3.5 text-primary" strokeWidth={2.4} />
-              Tendencia del día
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="relative">
-            <p className="text-[18px] font-semibold leading-snug tracking-tight">
-              Videos cortos de frutas IA con narración
-            </p>
-            <p className="mt-2.5 text-[12px] text-muted-foreground">
-              Ranking #3 · TikTok ·{" "}
-              <span className="font-medium text-primary">+212%</span> vs. semana pasada
-            </p>
-            <Button asChild size="sm" className="mt-6 h-9 w-full rounded-xl" variant="secondary">
-              <Link to="/investigar/tendencias">
-                Explorar tendencias
-                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Integration status */}
-      <Card className="surface-card">
-        <CardHeader className="relative flex flex-row items-center justify-between pb-3">
-          <CardTitle className="flex items-center gap-2 text-[15px] font-semibold tracking-tight">
-            <Plug className="h-4 w-4 text-primary" strokeWidth={2.2} />
-            Estado de integraciones
-          </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 text-muted-foreground hover:text-foreground"
-            asChild
-          >
-            <Link to="/integraciones">Gestionar</Link>
-          </Button>
-        </CardHeader>
-        <CardContent className="relative">
-          <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {integrationsStatus.map((i) => (
-              <div
-                key={i.name}
-                className="flex items-center justify-between rounded-xl border border-border/40 bg-background/30 px-3.5 py-3 transition-all duration-200 hover:border-border hover:bg-accent/40"
-              >
-                <span className="text-[13px] font-medium">{i.name}</span>
-                {i.connected ? (
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_oklch(0.79_0.155_70)]" />
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary" strokeWidth={2.4} />
-                  </div>
-                ) : (
-                  <XCircle className="h-3.5 w-3.5 text-muted-foreground/50" strokeWidth={2} />
-                )}
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }
