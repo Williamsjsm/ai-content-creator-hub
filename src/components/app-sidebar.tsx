@@ -53,18 +53,13 @@ const nav = [
   {
     label: "Biblioteca",
     items: [
-      { title: "Prompts", url: "/biblioteca/prompts", icon: FileText },
-      { title: "Imágenes", url: "/biblioteca/imagenes", icon: ImageIcon },
-      { title: "Videos", url: "/biblioteca/videos", icon: Video },
-      { title: "Favoritos", url: "/biblioteca/favoritos", icon: Heart },
-      { title: "Proyectos", url: "/biblioteca/proyectos", icon: FolderKanban },
-      { title: "Descargas", url: "/biblioteca/descargas", icon: Download },
+      { title: "Biblioteca", url: "/biblioteca/prompts", icon: Library },
+      { title: "Centro de Publicación", url: "/publicar", icon: Send },
     ],
   },
   {
     label: "Sistema",
     items: [
-      { title: "Centro de Publicación", url: "/publicar", icon: Send },
       { title: "Integraciones", url: "/integraciones", icon: Plug },
       { title: "Configuración", url: "/configuracion", icon: Settings },
     ],
