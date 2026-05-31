@@ -8,14 +8,10 @@ import {
   TrendingUp,
   Lightbulb,
   Brain,
-  FileText,
-  Heart,
-  FolderKanban,
   Plug,
   Settings,
   Wand2,
   Library,
-  Download,
   Send,
 } from "lucide-react";
 
