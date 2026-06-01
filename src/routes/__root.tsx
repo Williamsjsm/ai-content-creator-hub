@@ -11,8 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { TopBar } from "@/components/top-bar";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -125,37 +126,7 @@ function RootComponent() {
         <div className="flex min-h-screen w-full bg-background text-foreground dark">
           <AppSidebar />
           <div className="flex flex-1 flex-col">
-            <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border/50 bg-background/60 px-4 backdrop-blur-xl">
-              <SidebarTrigger className="text-muted-foreground transition-colors hover:text-foreground" />
-              <div className="ml-auto flex items-center gap-2">
-                {/* Connected integrations */}
-                <div className="hidden items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1.5 sm:flex">
-                  <div className="flex -space-x-1">
-                    {["ChatGPT", "Google AI", "Flow"].map((name, i) => (
-                      <span
-                        key={name}
-                        title={`${name} conectado`}
-                        className="h-2 w-2 rounded-full bg-primary ring-2 ring-card shadow-[0_0_6px_oklch(0.79_0.155_70_/_60%)]"
-                        style={{ zIndex: 3 - i }}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-[11.5px] font-medium tracking-tight text-muted-foreground">
-                    2 conectadas
-                  </span>
-                </div>
-                {/* Workspace badge */}
-                <div className="flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1.5 text-xs text-muted-foreground">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                  </span>
-                  <span className="hidden font-medium tracking-tight text-foreground/80 md:inline">
-                    Espacio privado
-                  </span>
-                </div>
-              </div>
-            </header>
+            <TopBar />
             <main className="flex-1">
               <Outlet />
             </main>
