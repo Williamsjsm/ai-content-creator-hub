@@ -235,7 +235,7 @@ function Aprendizaje() {
                       <r.icon className="h-5 w-5" />
                     </div>
                     <p className="min-w-0 flex-1 text-sm font-medium">{r.text}</p>
-                    <Badge className={cn("border", impactColor[r.impact])}>{r.impact}</Badge>
+                    <Badge variant={impactVariant[r.impact] ?? "soft"}>{r.impact}</Badge>
                     <Button size="icon" variant="ghost" className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100">
                       <ArrowUpRight className="h-4 w-4" />
                     </Button>
