@@ -100,11 +100,11 @@ const history: HistoryPost[] = [
   { id: "h5", title: "Jaguar neón loop", platform: "tiktok", date: "22 May, 18:45", status: "published", views: "510K", likes: "78.9K", gradient: "from-[#25F4EE] to-[#FE2C55]" },
 ];
 
-const statusConfig: Record<PostStatus, { label: string; className: string; icon: LucideIcon }> = {
-  published: { label: "Publicado", className: "bg-emerald-500/15 text-emerald-400", icon: CheckCircle2 },
-  scheduled: { label: "Programado", className: "bg-sky-500/15 text-sky-400", icon: Clock },
-  failed: { label: "Fallido", className: "bg-destructive/15 text-destructive", icon: AlertCircle },
-  draft: { label: "Borrador", className: "bg-muted text-muted-foreground", icon: Clock },
+const statusConfig: Record<PostStatus, { label: string; variant: "success" | "info" | "destructive" | "soft"; icon: LucideIcon }> = {
+  published: { label: "Publicado",  variant: "success",     icon: CheckCircle2 },
+  scheduled: { label: "Programado", variant: "info",        icon: Clock },
+  failed:    { label: "Fallido",    variant: "destructive", icon: AlertCircle },
+  draft:     { label: "Borrador",   variant: "soft",        icon: Clock },
 };
 
 // ============ Shared bits ============
@@ -122,11 +122,12 @@ function PlatformIcon({ id, size = "md" }: { id: PlatformId; size?: "sm" | "md" 
 function StatusBadge({ status }: { status: PostStatus }) {
   const c = statusConfig[status];
   return (
-    <Badge variant="secondary" className={cn("gap-1 border-0 font-medium", c.className)}>
-      <c.icon className="h-3 w-3" /> {c.label}
+    <Badge variant={c.variant} className="font-medium">
+      <c.icon /> {c.label}
     </Badge>
   );
 }
+
 
 function StatCard({ icon: Icon, label, value, accent }: { icon: LucideIcon; label: string; value: string; accent: string }) {
   return (

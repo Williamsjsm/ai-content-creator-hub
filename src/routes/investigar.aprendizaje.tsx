@@ -86,11 +86,12 @@ const recommendations = [
   { text: "Refuerza storytelling en tus próximos 5 videos.", impact: "Alto", icon: Sparkles },
 ];
 
-const impactColor: Record<string, string> = {
-  Explosivo: "bg-rose-500/15 text-rose-400 border-rose-500/30",
-  Alto: "bg-orange-500/15 text-orange-400 border-orange-500/30",
-  Medio: "bg-amber-400/15 text-amber-300 border-amber-400/30",
+const impactVariant: Record<string, "destructive" | "warning" | "info"> = {
+  Explosivo: "destructive",
+  Alto: "warning",
+  Medio: "info",
 };
+
 
 function Aprendizaje() {
   const [tab, setTab] = useState("resumen");
@@ -147,7 +148,7 @@ function Aprendizaje() {
                     <CardContent className="-mt-8 space-y-3 p-5">
                       <div className="flex items-center justify-between">
                         <h3 className="rounded-lg bg-card/90 px-2.5 py-1 text-base font-semibold backdrop-blur">{n.name}</h3>
-                        <Badge className="border-emerald-500/30 bg-emerald-500/15 text-emerald-400">{n.trend}</Badge>
+                        <Badge variant="success">{n.trend}</Badge>
                       </div>
                       <Metric label="Crecimiento" value={n.growth} />
                       <Metric label="Potencial" value={n.potential} />
@@ -234,7 +235,7 @@ function Aprendizaje() {
                       <r.icon className="h-5 w-5" />
                     </div>
                     <p className="min-w-0 flex-1 text-sm font-medium">{r.text}</p>
-                    <Badge className={cn("border", impactColor[r.impact])}>{r.impact}</Badge>
+                    <Badge variant={impactVariant[r.impact] ?? "soft"}>{r.impact}</Badge>
                     <Button size="icon" variant="ghost" className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100">
                       <ArrowUpRight className="h-4 w-4" />
                     </Button>

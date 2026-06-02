@@ -46,8 +46,15 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
+
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
   --color-chart-1: var(--chart-1);
@@ -66,35 +73,54 @@
 }
 
 :root {
-  /* AI Content Studio — dark premium SaaS */
+  /* === AI Content Studio · Global Design System ===
+   * One source of truth for color, typography, motion and elevation.
+   * Modules should consume semantic tokens — never hard-code Tailwind palette
+   * colors (e.g. emerald-500, rose-400). For status, use Badge variants
+   * `success | warning | info | destructive` or the `text-success` /
+   * `bg-success/15` token utilities below.
+   */
   --radius: 0.875rem;
-  /* Neutral graphite — Linear/ChatGPT/Arc inspired */
+
+  /* Surfaces — neutral graphite */
   --background: oklch(0.16 0.006 265);
   --foreground: oklch(0.975 0.004 265);
   --card: oklch(0.205 0.007 265);
   --card-foreground: oklch(0.975 0.004 265);
   --popover: oklch(0.195 0.007 265);
   --popover-foreground: oklch(0.975 0.004 265);
-  /* Warm amber — kept as accent */
+
+  /* Brand — warm amber */
   --primary: oklch(0.79 0.155 70);
   --primary-foreground: oklch(0.17 0.01 265);
-  /* Soft violet */
+  /* Brand secondary — soft violet */
   --secondary: oklch(0.66 0.17 292);
   --secondary-foreground: oklch(0.99 0 0);
+
   --muted: oklch(0.245 0.007 265);
   --muted-foreground: oklch(0.7 0.013 265);
   --accent: oklch(0.265 0.01 265);
   --accent-foreground: oklch(0.975 0.004 265);
+
+  /* Semantic status — the ONLY allowed status colors */
+  --success: oklch(0.74 0.16 155);
+  --success-foreground: oklch(0.16 0.01 155);
+  --warning: oklch(0.82 0.16 80);
+  --warning-foreground: oklch(0.17 0.01 80);
+  --info: oklch(0.72 0.14 230);
+  --info-foreground: oklch(0.16 0.01 230);
   --destructive: oklch(0.62 0.22 25);
   --destructive-foreground: oklch(1 0 0);
+
   --border: oklch(1 0 0 / 6%);
   --input: oklch(1 0 0 / 9%);
   --ring: oklch(0.79 0.155 70 / 55%);
   --chart-1: oklch(0.79 0.155 70);
   --chart-2: oklch(0.66 0.17 292);
-  --chart-3: oklch(0.7 0.15 200);
-  --chart-4: oklch(0.75 0.18 145);
-  --chart-5: oklch(0.65 0.22 25);
+  --chart-3: oklch(0.72 0.14 230);
+  --chart-4: oklch(0.74 0.16 155);
+  --chart-5: oklch(0.62 0.22 25);
+
   --sidebar: oklch(0.18 0.006 265);
   --sidebar-foreground: oklch(0.93 0.004 265);
   --sidebar-primary: oklch(0.79 0.155 70);
@@ -133,6 +159,13 @@
   --accent-foreground: oklch(0.975 0.004 265);
   --destructive: oklch(0.62 0.22 25);
   --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.74 0.16 155);
+  --success-foreground: oklch(0.16 0.01 155);
+  --warning: oklch(0.82 0.16 80);
+  --warning-foreground: oklch(0.17 0.01 80);
+  --info: oklch(0.72 0.14 230);
+  --info-foreground: oklch(0.16 0.01 230);
+
   --border: oklch(1 0 0 / 6%);
   --input: oklch(1 0 0 / 9%);
   --ring: oklch(0.79 0.155 70 / 55%);
@@ -231,4 +264,46 @@
     opacity: 0.18;
     pointer-events: none;
   }
+
+  /* === Unified typography scale ===
+   * Use these instead of ad-hoc text-[10px] / text-[11.5px] sizes so every
+   * module shares the same vertical rhythm.
+   */
+  .text-display   { font-size: 2rem;     line-height: 1.1;  letter-spacing: -0.025em; font-weight: 600; }
+  .text-title     { font-size: 1.25rem;  line-height: 1.3;  letter-spacing: -0.015em; font-weight: 600; }
+  .text-subtitle  { font-size: 0.9375rem;line-height: 1.45; color: var(--color-muted-foreground); }
+  .text-body      { font-size: 0.875rem; line-height: 1.55; }
+  .text-meta      { font-size: 0.75rem;  line-height: 1.4;  color: var(--color-muted-foreground); }
+  .text-eyebrow   { font-size: 0.6875rem;line-height: 1;    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--color-muted-foreground); }
+
+  /* === Unified status surfaces === */
+  .surface-success     { background: color-mix(in oklab, var(--color-success) 15%, transparent); color: var(--color-success); border: 1px solid color-mix(in oklab, var(--color-success) 30%, transparent); }
+  .surface-warning     { background: color-mix(in oklab, var(--color-warning) 15%, transparent); color: var(--color-warning); border: 1px solid color-mix(in oklab, var(--color-warning) 30%, transparent); }
+  .surface-info        { background: color-mix(in oklab, var(--color-info)    15%, transparent); color: var(--color-info);    border: 1px solid color-mix(in oklab, var(--color-info)    30%, transparent); }
+  .surface-destructive { background: color-mix(in oklab, var(--color-destructive) 15%, transparent); color: var(--color-destructive); border: 1px solid color-mix(in oklab, var(--color-destructive) 30%, transparent); }
+  .surface-muted       { background: var(--color-muted); color: var(--color-muted-foreground); border: 1px solid var(--color-border); }
+
+  /* Status dot — for inline indicators */
+  .status-dot { display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 999px; }
+  .status-dot-success     { background: var(--color-success); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-success) 20%, transparent); }
+  .status-dot-warning     { background: var(--color-warning); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-warning) 20%, transparent); }
+  .status-dot-info        { background: var(--color-info);    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-info)    20%, transparent); }
+  .status-dot-destructive { background: var(--color-destructive); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-destructive) 20%, transparent); }
+
+  /* === Unified motion ===
+   * Animation primitives. Prefer these over per-module ad-hoc transitions.
+   */
+  .motion-fade-in  { animation: fade-in 0.3s var(--transition-smooth) both; }
+  .motion-rise     { animation: rise 0.35s var(--transition-smooth) both; }
+  .motion-pop      { animation: pop 0.25s var(--transition-smooth) both; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
 }
+
