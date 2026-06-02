@@ -148,7 +148,7 @@ function Aprendizaje() {
                     <CardContent className="-mt-8 space-y-3 p-5">
                       <div className="flex items-center justify-between">
                         <h3 className="rounded-lg bg-card/90 px-2.5 py-1 text-base font-semibold backdrop-blur">{n.name}</h3>
-                        <Badge className="border-emerald-500/30 bg-emerald-500/15 text-emerald-400">{n.trend}</Badge>
+                        <Badge variant="success">{n.trend}</Badge>
                       </div>
                       <Metric label="Crecimiento" value={n.growth} />
                       <Metric label="Potencial" value={n.potential} />
