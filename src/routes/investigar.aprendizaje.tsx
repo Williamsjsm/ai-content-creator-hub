@@ -86,11 +86,12 @@ const recommendations = [
   { text: "Refuerza storytelling en tus próximos 5 videos.", impact: "Alto", icon: Sparkles },
 ];
 
-const impactColor: Record<string, string> = {
-  Explosivo: "bg-rose-500/15 text-rose-400 border-rose-500/30",
-  Alto: "bg-orange-500/15 text-orange-400 border-orange-500/30",
-  Medio: "bg-amber-400/15 text-amber-300 border-amber-400/30",
+const impactVariant: Record<string, "destructive" | "warning" | "info"> = {
+  Explosivo: "destructive",
+  Alto: "warning",
+  Medio: "info",
 };
+
 
 function Aprendizaje() {
   const [tab, setTab] = useState("resumen");
