@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import {
   Search,
   Bell,
@@ -8,16 +9,6 @@ import {
   Settings,
   Plug,
   Sparkles,
-  TrendingUp,
-  Wand2,
-  Image as ImageIcon,
-  Video,
-  Workflow,
-  Library,
-  Send,
-  LayoutDashboard,
-  Lightbulb,
-  Brain,
   HelpCircle,
 } from "lucide-react";
 
@@ -43,21 +34,10 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
+import { primaryRoutes } from "@/lib/navigation";
 
-const searchRoutes = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard, group: "General" },
-  { title: "Generador de Prompts", url: "/crear/prompts", icon: Wand2, group: "Crear" },
-  { title: "Imagen IA", url: "/crear/imagen", icon: ImageIcon, group: "Crear" },
-  { title: "Video IA", url: "/crear/video", icon: Video, group: "Crear" },
-  { title: "Flow Center", url: "/crear/flow", icon: Workflow, group: "Crear" },
-  { title: "Tendencias", url: "/investigar/tendencias", icon: TrendingUp, group: "Investigar" },
-  { title: "Inspiración IA", url: "/investigar/inspiracion", icon: Lightbulb, group: "Investigar" },
-  { title: "Aprendizaje", url: "/investigar/aprendizaje", icon: Brain, group: "Investigar" },
-  { title: "Biblioteca", url: "/biblioteca/prompts", icon: Library, group: "Biblioteca" },
-  { title: "Centro de Publicación", url: "/publicar", icon: Send, group: "Biblioteca" },
-  { title: "Integraciones", url: "/integraciones", icon: Plug, group: "Sistema" },
-  { title: "Configuración", url: "/configuracion", icon: Settings, group: "Sistema" },
-];
+// Simulated integration state — replace with real API later.
+const connectedIntegrations = ["ChatGPT", "Google AI", "Flow"] as const;
 
 const notifications = [
   {
@@ -83,10 +63,16 @@ const notifications = [
   },
 ];
 
+const placeholderToast = () =>
+  toast("Función preparada para integración futura", {
+    description: "Disponible cuando se conecte la API real.",
+  });
+
 export function TopBar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const unreadCount = notifications.filter((n) => n.unread).length;
+  const integrationCount = connectedIntegrations.length;
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -99,7 +85,7 @@ export function TopBar() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const grouped = searchRoutes.reduce<Record<string, typeof searchRoutes>>((acc, r) => {
+  const grouped = primaryRoutes.reduce<Record<string, typeof primaryRoutes>>((acc, r) => {
     (acc[r.group] ||= []).push(r);
     return acc;
   }, {});
@@ -124,26 +110,23 @@ export function TopBar() {
         {/* System status */}
         <div className="hidden items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1.5 lg:flex">
           <div className="flex -space-x-1">
-            {["ChatGPT", "Google AI", "Flow"].map((name, i) => (
+            {connectedIntegrations.map((name, i) => (
               <span
                 key={name}
                 title={`${name} conectado`}
                 className="h-2 w-2 rounded-full bg-primary ring-2 ring-card shadow-[0_0_6px_oklch(0.79_0.155_70_/_60%)]"
-                style={{ zIndex: 3 - i }}
+                style={{ zIndex: connectedIntegrations.length - i }}
               />
             ))}
           </div>
           <span className="text-[11.5px] font-medium tracking-tight text-muted-foreground">
-            2 conectadas
+            {integrationCount} conectadas
           </span>
         </div>
         <div className="hidden items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1.5 text-xs text-muted-foreground md:flex">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-          </span>
+          <span className="status-dot-success" aria-hidden />
           <span className="hidden font-medium tracking-tight text-foreground/80 md:inline">
-            Sistema operativo
+            Sistema activo
           </span>
         </div>
 
@@ -167,16 +150,9 @@ export function TopBar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80 p-0">
             <div className="flex items-center justify-between border-b border-border/60 px-3 py-2.5">
-              <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                Notificaciones
-              </span>
+              <span className="text-eyebrow text-muted-foreground">Notificaciones</span>
               {unreadCount > 0 && (
-                <Badge
-                  variant="outline"
-                  className="border-primary/30 bg-primary/10 text-[10.5px] font-medium uppercase tracking-wider text-primary"
-                >
-                  {unreadCount} nuevas
-                </Badge>
+                <Badge variant="brand">{unreadCount} nuevas</Badge>
               )}
             </div>
             <ul className="max-h-80 divide-y divide-border/50 overflow-y-auto">
@@ -201,7 +177,12 @@ export function TopBar() {
               ))}
             </ul>
             <div className="border-t border-border/60 p-2">
-              <Button variant="ghost" size="sm" className="w-full justify-center rounded-lg text-[12.5px]">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-center rounded-lg text-[12.5px]"
+                onClick={placeholderToast}
+              >
                 Ver todas
               </Button>
             </div>
@@ -243,10 +224,13 @@ export function TopBar() {
               <Plug className="h-4 w-4" /> Integraciones
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onSelect={placeholderToast}>
               <HelpCircle className="h-4 w-4" /> Ayuda
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive focus:text-destructive">
+            <DropdownMenuItem
+              onSelect={placeholderToast}
+              className="text-destructive focus:text-destructive"
+            >
               <LogOut className="h-4 w-4" /> Cerrar sesión
             </DropdownMenuItem>
           </DropdownMenuContent>
