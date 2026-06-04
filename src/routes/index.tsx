@@ -182,7 +182,7 @@ function DashboardContent({ data }: { data: NonNullable<ReturnType<typeof useDas
 /* ─────────────────────────────────────────────── */
 /*  HERO — Proyecto activo (Runway / Vision Pro)  */
 /* ─────────────────────────────────────────────── */
-function HeroProject() {
+function HeroProject({ data }: { data: NonNullable<ReturnType<typeof useDashboard>["data"]> }) {
   return (
     <div className="group relative overflow-hidden rounded-[28px] border border-white/10 shadow-[var(--shadow-elevated)]">
       {/* Background image */}
@@ -224,7 +224,7 @@ function HeroProject() {
             </h2>
 
             <div className="flex flex-wrap items-center gap-2">
-              <Badge className="rounded-full border-0 bg-white/12 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-white backdrop-blur-md">
+              <Badge variant="soft" className="rounded-full px-3 py-1 text-eyebrow uppercase">
                 {data.activeProject.status}
               </Badge>
               <span className="text-[12px] text-white/60">
@@ -295,10 +295,10 @@ function HeroProject() {
           {/* Mini status pulse */}
           <div className="flex items-center justify-between rounded-2xl border border-white/12 bg-white/[0.06] px-4 py-3 backdrop-blur-xl">
             <div className="flex items-center gap-2 text-[11.5px] text-white/70">
-              <Circle className="h-2 w-2 fill-emerald-400 text-emerald-400" />
+              <span className="status-dot-success" aria-hidden />
               Sincronizado con Flow Center
             </div>
-            <span className="text-[11px] font-mono text-white/50">v0.12</span>
+            <span className="text-[11px] font-mono text-white/50">{data.activeProject.version}</span>
           </div>
         </div>
       </div>
