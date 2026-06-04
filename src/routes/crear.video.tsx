@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -62,7 +63,14 @@ function VideoIA() {
                 </Select>
               </Field>
             </div>
-            <Button className="w-full bg-[image:var(--gradient-primary)] text-primary-foreground hover:opacity-90">
+            <Button
+              className="w-full bg-[image:var(--gradient-primary)] text-primary-foreground hover:opacity-90"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "La generación de video estará disponible al conectar la API.",
+                })
+              }
+            >
               <Sparkles className="mr-2 h-4 w-4" /> Generar video
             </Button>
           </CardContent>
