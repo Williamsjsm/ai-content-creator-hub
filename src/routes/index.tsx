@@ -10,11 +10,14 @@ import {
   Brain,
   Clapperboard,
   Play,
-  Circle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/page-header";
+import { useDashboard } from "@/hooks/use-dashboard";
+import { LoadingState } from "@/components/state/loading-state";
+import { ErrorState } from "@/components/state/error-state";
+import { EmptyState } from "@/components/state/empty-state";
 import heroProject from "@/assets/hero-project.jpg";
 import cardTrend from "@/assets/card-trend.jpg";
 import cardIdea from "@/assets/card-idea.jpg";
@@ -49,6 +52,8 @@ const data = {
 };
 
 function Index() {
+  const { data, isLoading, error, isEmpty } = useDashboard();
+
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-8 p-5 sm:p-8 lg:space-y-10 xl:p-12">
       <PageHeader
@@ -67,9 +72,28 @@ function Index() {
         }
       />
 
+      {isLoading ? (
+        <LoadingState label="Cargando tu estudio…" />
+      ) : error ? (
+        <ErrorState description={error.message} />
+      ) : isEmpty || !data ? (
+        <EmptyState
+          title="Sin contenido todavía"
+          description="Crea tu primer prompt para comenzar."
+        />
+      ) : (
+        <DashboardContent data={data} />
+      )}
+    </div>
+  );
+}
+
+function DashboardContent({ data }: { data: NonNullable<ReturnType<typeof useDashboard>["data"]> }) {
+  return (
+    <>
       {/* ───────── HERO — Proyecto Activo ───────── */}
-      <section className="animate-fade-in">
-        <HeroProject />
+      <section className="motion-fade-in">
+        <HeroProject data={data} />
       </section>
 
       {/* ───────── Visual cards row ───────── */}
@@ -80,6 +104,80 @@ function Index() {
           eyebrowIcon={<TrendingUp className="h-3.5 w-3.5" strokeWidth={2.4} />}
           title={data.trend.category}
           meta={
+            <div className="w-full">
+              <div className="mb-1.5 flex items-center justify-between text-[11px] text-white/70">
+                <span className="uppercase tracking-[0.14em]">Potencial viral</span>
+                <span className="font-semibold text-white">{data.trend.viral}%</span>
+              </div>
+              <div className="h-1 w-full overflow-hidden rounded-full bg-white/15 backdrop-blur">
+                <div
+                  className="h-full rounded-full bg-[image:var(--gradient-primary)]"
+                  style={{ width: `${data.trend.viral}%` }}
+                />
+              </div>
+            </div>
+          }
+          cta={
+            <Button asChild size="sm" className="h-9 rounded-xl bg-white/10 text-white backdrop-blur-md hover:bg-white/20">
+              <Link to="/investigar/tendencias">
+                Explorar <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              </Link>
+            </Button>
+          }
+          delay={60}
+        />
+        <VisualCard
+          image={cardIdea}
+          eyebrow="Idea recomendada"
+          eyebrowIcon={<Lightbulb className="h-3.5 w-3.5" strokeWidth={2.4} />}
+          title={data.idea.idea}
+          subtitle={data.idea.reason}
+          cta={
+            <Button asChild size="sm" className="h-9 rounded-xl bg-white text-black hover:bg-white/90">
+              <Link to="/crear/prompts">
+                <Wand2 className="mr-1.5 h-3.5 w-3.5" /> Crear prompt
+              </Link>
+            </Button>
+          }
+          delay={120}
+        />
+      </section>
+
+      {/* ───────── Status row (compact) ───────── */}
+      <section className="grid gap-4 md:grid-cols-3">
+        <StatusCard
+          icon={<Clapperboard className="h-4 w-4" strokeWidth={2.2} />}
+          eyebrow="En producción"
+          title={data.production.project}
+          badge={data.production.status}
+          to="/crear/flow"
+          ctaIcon={<Workflow className="h-3.5 w-3.5" />}
+          ctaLabel="Flow Center"
+          delay={180}
+        />
+        <StatusCard
+          icon={<CalendarClock className="h-4 w-4" strokeWidth={2.2} />}
+          eyebrow="Próxima publicación"
+          title={data.nextPublish.platform}
+          subtitle={data.nextPublish.date}
+          badge={data.nextPublish.status}
+          to="/publicar"
+          ctaLabel="Calendario"
+          delay={240}
+        />
+        <StatusCard
+          icon={<Brain className="h-4 w-4" strokeWidth={2.2} />}
+          eyebrow="Insight principal"
+          title={`"${data.insight}"`}
+          to="/investigar/aprendizaje"
+          ctaLabel="Ver aprendizaje"
+          accent
+          delay={300}
+        />
+      </section>
+    </>
+  );
+}
             <div className="w-full">
               <div className="mb-1.5 flex items-center justify-between text-[11px] text-white/70">
                 <span className="uppercase tracking-[0.14em]">Potencial viral</span>
