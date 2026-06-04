@@ -7,7 +7,7 @@ import { Sparkles, CalendarClock, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FlowConnector } from "@/components/flow-connector";
 import { libraryTabs } from "@/lib/navigation";
-import { EmptyState } from "@/components/state/empty-state";
+import { EmptyState as GlobalEmptyState } from "@/components/state/empty-state";
 
 export function LibraryShell({ children, count }: { children: ReactNode; count?: number }) {
   const path = useRouterState({ select: (r) => r.location.pathname });
@@ -76,4 +76,12 @@ export function LibraryShell({ children, count }: { children: ReactNode; count?:
   );
 }
 
-export { EmptyState };
+/** Backwards-compatible wrapper used by /biblioteca/* routes. */
+export function EmptyState({ label }: { label: string }) {
+  return (
+    <GlobalEmptyState
+      title="Sin resultados"
+      description={`No se encontraron ${label} con los filtros actuales.`}
+    />
+  );
+}
