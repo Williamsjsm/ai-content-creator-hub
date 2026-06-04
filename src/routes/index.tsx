@@ -411,10 +411,7 @@ function StatusCard({
         <div className="flex items-center gap-2">
           {subtitle ? <span className="text-[12px] text-muted-foreground">{subtitle}</span> : null}
           {badge ? (
-            <Badge
-              variant="outline"
-              className="border-primary/30 bg-primary/10 text-[10px] font-medium uppercase tracking-wider text-primary"
-            >
+            <Badge variant="brand" className="text-eyebrow uppercase">
               {badge}
             </Badge>
           ) : null}
