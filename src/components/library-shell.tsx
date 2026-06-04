@@ -1,20 +1,13 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ReactNode } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
-import { Sparkles, FileText, Image as ImageIcon, Video, Heart, FolderKanban, Download } from "lucide-react";
+import { Sparkles, CalendarClock, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CalendarClock, BarChart3 } from "lucide-react";
 import { FlowConnector } from "@/components/flow-connector";
-
-const tabs = [
-  { to: "/biblioteca/prompts", label: "Prompts", icon: FileText },
-  { to: "/biblioteca/imagenes", label: "Imágenes", icon: ImageIcon },
-  { to: "/biblioteca/videos", label: "Videos", icon: Video },
-  { to: "/biblioteca/favoritos", label: "Favoritos", icon: Heart },
-  { to: "/biblioteca/proyectos", label: "Proyectos", icon: FolderKanban },
-  { to: "/biblioteca/descargas", label: "Descargas", icon: Download },
-] as const;
+import { libraryTabs } from "@/lib/navigation";
+import { EmptyState as GlobalEmptyState } from "@/components/state/empty-state";
 
 export function LibraryShell({ children, count }: { children: ReactNode; count?: number }) {
   const path = useRouterState({ select: (r) => r.location.pathname });
@@ -31,7 +24,15 @@ export function LibraryShell({ children, count }: { children: ReactNode; count?:
                 <span>recursos</span>
               </div>
             )}
-            <Button size="sm" className="gap-1.5">
+            <Button
+              size="sm"
+              className="gap-1.5"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Podrás crear recursos cuando conectemos la API real.",
+                })
+              }
+            >
               <Sparkles className="h-3.5 w-3.5" /> Nuevo recurso
             </Button>
           </>
@@ -40,7 +41,7 @@ export function LibraryShell({ children, count }: { children: ReactNode; count?:
 
       <div className="-mx-1 overflow-x-auto">
         <div className="flex min-w-max items-center gap-1 rounded-xl border border-border/60 bg-card/40 p-1">
-          {tabs.map((t) => {
+          {libraryTabs.map((t) => {
             const active = path === t.to;
             return (
               <Link
@@ -75,14 +76,12 @@ export function LibraryShell({ children, count }: { children: ReactNode; count?:
   );
 }
 
+/** Backwards-compatible wrapper used by /biblioteca/* routes. */
 export function EmptyState({ label }: { label: string }) {
   return (
-    <div className="surface-card flex flex-col items-center justify-center gap-2 p-16 text-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent/60">
-        <Sparkles className="h-5 w-5 text-muted-foreground" />
-      </div>
-      <p className="text-sm font-medium">Sin resultados</p>
-      <p className="text-xs text-muted-foreground">No se encontraron {label} con los filtros actuales.</p>
-    </div>
+    <GlobalEmptyState
+      title="Sin resultados"
+      description={`No se encontraron ${label} con los filtros actuales.`}
+    />
   );
 }

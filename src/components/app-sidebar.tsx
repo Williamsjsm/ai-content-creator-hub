@@ -1,19 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import {
-  LayoutDashboard,
-  Sparkles,
-  Image as ImageIcon,
-  Video,
-  Workflow,
-  TrendingUp,
-  Lightbulb,
-  Brain,
-  Plug,
-  Settings,
-  Wand2,
-  Library,
-  Send,
-} from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -27,44 +13,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-
-const nav = [
-  {
-    label: "General",
-    items: [{ title: "Dashboard", url: "/", icon: LayoutDashboard }],
-  },
-  {
-    label: "Crear",
-    items: [
-      { title: "Generador de Prompts", url: "/crear/prompts", icon: Wand2 },
-      { title: "Imagen IA", url: "/crear/imagen", icon: ImageIcon },
-      { title: "Video IA", url: "/crear/video", icon: Video },
-      { title: "Flow Center", url: "/crear/flow", icon: Workflow },
-    ],
-  },
-  {
-    label: "Investigar",
-    items: [
-      { title: "Tendencias", url: "/investigar/tendencias", icon: TrendingUp },
-      { title: "Inspiración IA", url: "/investigar/inspiracion", icon: Lightbulb },
-      { title: "Aprendizaje Inteligente", url: "/investigar/aprendizaje", icon: Brain },
-    ],
-  },
-  {
-    label: "Biblioteca",
-    items: [
-      { title: "Biblioteca", url: "/biblioteca/prompts", icon: Library },
-      { title: "Centro de Publicación", url: "/publicar", icon: Send },
-    ],
-  },
-  {
-    label: "Sistema",
-    items: [
-      { title: "Integraciones", url: "/integraciones", icon: Plug },
-      { title: "Configuración", url: "/configuracion", icon: Settings },
-    ],
-  },
-];
+import { navGroups } from "@/lib/navigation";
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -76,6 +25,7 @@ export function AppSidebar() {
       <SidebarHeader className="border-b border-sidebar-border/70 pb-2.5">
         <Link
           to="/"
+          aria-label="AI Content Studio — Inicio"
           className="group flex items-center gap-2.5 rounded-xl px-2 py-2.5 transition-colors hover:bg-sidebar-accent/50"
         >
           <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[image:var(--gradient-primary)] shadow-[var(--shadow-glow)] transition-transform duration-300 group-hover:scale-105">
@@ -93,7 +43,7 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="gap-1 px-2 py-3">
-        {nav.map((group) => (
+        {navGroups.map((group) => (
           <SidebarGroup key={group.label} className="py-1">
             {!collapsed && (
               <SidebarGroupLabel className="px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/55">
@@ -118,7 +68,6 @@ export function AppSidebar() {
                         className="group/item relative h-9 rounded-lg text-muted-foreground transition-all duration-200 hover:bg-sidebar-accent/60 hover:text-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-foreground data-[active=true]:font-medium data-[active=true]:shadow-[var(--shadow-soft)]"
                       >
                         <Link to={item.url} className="flex items-center gap-2.5">
-                          {/* Active indicator bar */}
                           <span
                             className={`absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-primary transition-all duration-200 ${
                               active ? "opacity-100" : "opacity-0 scale-y-0"

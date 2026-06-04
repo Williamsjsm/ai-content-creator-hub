@@ -10,11 +10,14 @@ import {
   Brain,
   Clapperboard,
   Play,
-  Circle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/page-header";
+import { useDashboard } from "@/hooks/use-dashboard";
+import { LoadingState } from "@/components/state/loading-state";
+import { ErrorState } from "@/components/state/error-state";
+import { EmptyState } from "@/components/state/empty-state";
 import heroProject from "@/assets/hero-project.jpg";
 import cardTrend from "@/assets/card-trend.jpg";
 import cardIdea from "@/assets/card-idea.jpg";
@@ -49,6 +52,8 @@ const data = {
 };
 
 function Index() {
+  const { data, isLoading, error, isEmpty } = useDashboard();
+
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-8 p-5 sm:p-8 lg:space-y-10 xl:p-12">
       <PageHeader
@@ -67,9 +72,28 @@ function Index() {
         }
       />
 
+      {isLoading ? (
+        <LoadingState label="Cargando tu estudio…" />
+      ) : error ? (
+        <ErrorState description={error.message} />
+      ) : isEmpty || !data ? (
+        <EmptyState
+          title="Sin contenido todavía"
+          description="Crea tu primer prompt para comenzar."
+        />
+      ) : (
+        <DashboardContent data={data} />
+      )}
+    </div>
+  );
+}
+
+function DashboardContent({ data }: { data: NonNullable<ReturnType<typeof useDashboard>["data"]> }) {
+  return (
+    <>
       {/* ───────── HERO — Proyecto Activo ───────── */}
-      <section className="animate-fade-in">
-        <HeroProject />
+      <section className="motion-fade-in">
+        <HeroProject data={data} />
       </section>
 
       {/* ───────── Visual cards row ───────── */}
@@ -151,14 +175,14 @@ function Index() {
           delay={300}
         />
       </section>
-    </div>
+    </>
   );
 }
 
 /* ─────────────────────────────────────────────── */
 /*  HERO — Proyecto activo (Runway / Vision Pro)  */
 /* ─────────────────────────────────────────────── */
-function HeroProject() {
+function HeroProject({ data }: { data: NonNullable<ReturnType<typeof useDashboard>["data"]> }) {
   return (
     <div className="group relative overflow-hidden rounded-[28px] border border-white/10 shadow-[var(--shadow-elevated)]">
       {/* Background image */}
@@ -200,7 +224,7 @@ function HeroProject() {
             </h2>
 
             <div className="flex flex-wrap items-center gap-2">
-              <Badge className="rounded-full border-0 bg-white/12 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-white backdrop-blur-md">
+              <Badge variant="soft" className="rounded-full px-3 py-1 text-eyebrow uppercase">
                 {data.activeProject.status}
               </Badge>
               <span className="text-[12px] text-white/60">
@@ -271,10 +295,10 @@ function HeroProject() {
           {/* Mini status pulse */}
           <div className="flex items-center justify-between rounded-2xl border border-white/12 bg-white/[0.06] px-4 py-3 backdrop-blur-xl">
             <div className="flex items-center gap-2 text-[11.5px] text-white/70">
-              <Circle className="h-2 w-2 fill-emerald-400 text-emerald-400" />
+              <span className="status-dot-success" aria-hidden />
               Sincronizado con Flow Center
             </div>
-            <span className="text-[11px] font-mono text-white/50">v0.12</span>
+            <span className="text-[11px] font-mono text-white/50">{data.activeProject.version}</span>
           </div>
         </div>
       </div>
@@ -387,10 +411,7 @@ function StatusCard({
         <div className="flex items-center gap-2">
           {subtitle ? <span className="text-[12px] text-muted-foreground">{subtitle}</span> : null}
           {badge ? (
-            <Badge
-              variant="outline"
-              className="border-primary/30 bg-primary/10 text-[10px] font-medium uppercase tracking-wider text-primary"
-            >
+            <Badge variant="brand" className="text-eyebrow uppercase">
               {badge}
             </Badge>
           ) : null}
