@@ -498,7 +498,7 @@ function WidgetTrendOfDay() {
         </div>
       </div>
       <h4 className="line-clamp-2 text-[13px] font-semibold">{t.title}</h4>
-      <div className="mt-1 flex items-center gap-1 text-[11px] text-emerald-400">
+      <div className="mt-1 flex items-center gap-1 text-[11px] text-success">
         <ArrowUpRight className="h-3 w-3" /> {t.growth} en 24h
       </div>
     </WidgetCard>
