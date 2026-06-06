@@ -166,12 +166,24 @@ function TrendsCenter() {
   const [period, setPeriod] = useState<string>("7 días");
   const [category, setCategory] = useState<Category | "Todas">("Todas");
 
+  const trendsHook = useTrends();
+
   const filteredTrends = useMemo(() => {
     return TRENDS.filter((t) =>
       (platform === "Todas" || t.platform === platform) &&
       (category === "Todas" || t.category === category)
     );
   }, [platform, category]);
+
+  if (trendsHook.isLoading) {
+    return <div className="p-6 lg:p-10"><LoadingState label="Cargando tendencias…" /></div>;
+  }
+  if (trendsHook.error) {
+    return <div className="p-6 lg:p-10"><ErrorState /></div>;
+  }
+  if (trendsHook.isEmpty) {
+    return <div className="p-6 lg:p-10"><EmptyState title="Sin tendencias" description="Aún no hay tendencias para mostrar." icon={Flame} /></div>;
+  }
 
   return (
     <div className="mx-auto w-full max-w-[1600px] space-y-6 p-6 lg:p-10">
