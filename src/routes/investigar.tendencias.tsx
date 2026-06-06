@@ -440,7 +440,7 @@ function StatChip({ label, value, tone }: { label: string; value: string; tone: 
     : tone === "warn" ? "surface-warning"
     : "surface-destructive";
   return (
-    <div className={cn("flex items-center justify-between rounded-lg border px-2.5 py-1.5", styles)}>
+    <div className={cn("flex items-center justify-between rounded-lg px-2.5 py-1.5", styles)}>
       <span className="text-[10.5px] uppercase tracking-wider opacity-80">{label}</span>
       <span className="text-[11.5px] font-semibold">{value}</span>
     </div>
