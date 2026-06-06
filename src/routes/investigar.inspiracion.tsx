@@ -238,9 +238,9 @@ function InspiracionPage() {
 // ============================================================
 
 function viralColor(v: number) {
-  if (v >= 90) return "text-rose-400";
-  if (v >= 80) return "text-amber-400";
-  if (v >= 70) return "text-emerald-400";
+  if (v >= 90) return "text-destructive";
+  if (v >= 80) return "text-warning";
+  if (v >= 70) return "text-success";
   return "text-muted-foreground";
 }
 
