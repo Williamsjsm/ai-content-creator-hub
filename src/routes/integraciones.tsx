@@ -188,7 +188,14 @@ function CentroIntegraciones() {
           title="Centro de Integraciones"
           subtitle="Centraliza todas las herramientas externas de tu ecosistema creativo en un solo panel."
           actions={
-            <Button className="gap-2">
+            <Button
+              className="gap-2"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Plug className="h-4 w-4" /> Añadir integración
             </Button>
           }
@@ -196,10 +203,10 @@ function CentroIntegraciones() {
 
         {/* Quick overview */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <OverviewCard icon={PlugZap} label="APIs conectadas" value={`${stats.connected}`} accent="text-emerald-400" />
-          <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-amber-400" />
-          <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-sky-400" />
-          <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-emerald-400" />
+          <OverviewCard icon={PlugZap} label="APIs conectadas" value={`${stats.connected}`} accent="text-success" />
+          <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-warning" />
+          <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-info" />
+          <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-success" />
         </div>
 
         <Tabs defaultValue="ia" className="space-y-6">
