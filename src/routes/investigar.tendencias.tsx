@@ -323,7 +323,7 @@ function TrendCard({ t }: { t: Trend }) {
           <Badge className="border-0 bg-black/60 text-[10px] text-white backdrop-blur-md">{t.duration}</Badge>
           <div className="flex items-center gap-2 text-[11px] text-white/95">
             <span className="flex items-center gap-1"><Eye className="h-3 w-3" /> {t.views}</span>
-            <span className="flex items-center gap-1 text-emerald-300"><ArrowUpRight className="h-3 w-3" /> {t.growth}</span>
+            <span className="flex items-center gap-1 text-success"><ArrowUpRight className="h-3 w-3" /> {t.growth}</span>
           </div>
         </div>
       </div>
