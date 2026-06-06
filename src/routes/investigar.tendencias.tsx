@@ -47,11 +47,11 @@ const platformColor: Record<Platform, string> = {
   Instagram: "from-[#F58529] via-[#DD2A7B] to-[#8134AF]",
 };
 
-const viralityMeta: Record<Virality, { label: string; dot: string; ring: string; text: string }> = {
-  bajo:      { label: "Bajo",      dot: "bg-emerald-500",  ring: "ring-emerald-500/30",  text: "text-emerald-400" },
-  medio:     { label: "Medio",     dot: "bg-amber-400",    ring: "ring-amber-400/30",    text: "text-amber-300" },
-  alto:      { label: "Alto",      dot: "bg-orange-500",   ring: "ring-orange-500/30",   text: "text-orange-400" },
-  explosivo: { label: "Explosivo", dot: "bg-rose-500",     ring: "ring-rose-500/40",     text: "text-rose-400" },
+const viralityMeta: Record<Virality, { label: string; dot: string; text: string }> = {
+  bajo:      { label: "Bajo",      dot: "status-dot-success",     text: "text-success" },
+  medio:     { label: "Medio",     dot: "status-dot-warning",     text: "text-warning" },
+  alto:      { label: "Alto",      dot: "status-dot-warning",     text: "text-warning" },
+  explosivo: { label: "Explosivo", dot: "status-dot-destructive", text: "text-destructive" },
 };
 
 interface Trend {
