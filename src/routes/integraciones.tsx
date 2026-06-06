@@ -322,10 +322,10 @@ function CentroIntegraciones() {
           {/* ---- Estado del Sistema ---- */}
           <TabsContent value="system" className="space-y-6">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <OverviewCard icon={CheckCircle2} label="APIs conectadas" value={`${stats.connected} / ${stats.total}`} accent="text-emerald-400" />
-              <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-amber-400" />
-              <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-sky-400" />
-              <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-emerald-400" />
+              <OverviewCard icon={CheckCircle2} label="APIs conectadas" value={`${stats.connected} / ${stats.total}`} accent="text-success" />
+              <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-warning" />
+              <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-info" />
+              <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-success" />
             </div>
             <Card className="border-border/60 bg-card">
               <CardContent className="space-y-3 p-5">
