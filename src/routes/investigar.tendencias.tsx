@@ -519,7 +519,7 @@ function WidgetTopCategory() {
           <div key={i.label} className="space-y-1">
             <div className="flex items-center justify-between text-[12px]">
               <span className="flex items-center gap-2">
-                <span className={cn("h-1.5 w-1.5 rounded-full", idx === 0 ? "bg-rose-500" : idx === 1 ? "bg-orange-400" : idx === 2 ? "bg-amber-300" : "bg-emerald-400")} />
+                <span className={cn("h-1.5 w-1.5 rounded-full", idx === 0 ? "bg-destructive" : idx === 1 ? "bg-warning" : idx === 2 ? "bg-warning/70" : "bg-success")} />
                 {i.label}
               </span>
               <span className="text-muted-foreground tabular-nums">{i.pct}%</span>
