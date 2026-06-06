@@ -175,11 +175,8 @@ function TrendsCenter() {
         subtitle="Descubre contenido viral y oportunidades de creación para TikTok, YouTube, Facebook e Instagram."
         actions={
           <>
-            <Badge className="hidden h-8 items-center gap-1.5 rounded-full border-0 bg-gradient-to-r from-rose-500/20 to-orange-500/20 px-3 text-rose-300 sm:inline-flex">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-rose-500" />
-              </span>
+            <Badge variant="destructive" className="hidden h-8 items-center gap-1.5 rounded-full px-3 sm:inline-flex motion-pop">
+              <span className="status-dot-destructive" aria-hidden />
               Live · {new Date().toLocaleDateString("es")}
             </Badge>
             <Button size="sm" className="gap-1.5">
