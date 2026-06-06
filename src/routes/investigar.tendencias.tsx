@@ -284,7 +284,7 @@ function TabTrigger({ value, icon: Icon, children }: { value: string; icon: type
 function ViralityPill({ v }: { v: Virality }) {
   const m = viralityMeta[v];
   return (
-    <span className={cn("inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-black/40 px-2 py-0.5 text-[10.5px] font-medium backdrop-blur-md ring-1", m.ring, m.text)}>
+    <span className={cn("inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-black/40 px-2 py-0.5 text-[10.5px] font-medium backdrop-blur-md", m.text)}>
       <span className={cn("h-1.5 w-1.5 rounded-full", m.dot)} />
       {m.label}
     </span>
