@@ -330,7 +330,7 @@ function VisualCard({
 }) {
   return (
     <div
-      className="group relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 shadow-[var(--shadow-card)] animate-fade-in hover-lift"
+      className="motion-fade-in group relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 shadow-[var(--shadow-card)] hover-lift"
       style={{ animationDelay: `${delay}ms` }}
     >
       <img
