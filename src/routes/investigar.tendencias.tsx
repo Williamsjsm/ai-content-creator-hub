@@ -353,7 +353,7 @@ function NicheCard({ n }: { n: Niche }) {
         <div className="absolute top-3 left-3 flex items-center gap-1.5">
           <Badge className="border-0 bg-black/50 text-[10px] text-white backdrop-blur-md">{n.category}</Badge>
         </div>
-        <div className="absolute bottom-2 right-3 flex items-baseline gap-1 text-emerald-300">
+        <div className="absolute bottom-2 right-3 flex items-baseline gap-1 text-success">
           <ArrowUpRight className="h-4 w-4" />
           <span className="text-[20px] font-bold tabular-nums">+{n.growth}%</span>
         </div>
