@@ -436,9 +436,9 @@ function OpportunityCard({ o }: { o: Opportunity }) {
 
 function StatChip({ label, value, tone }: { label: string; value: string; tone: "good" | "warn" | "bad" }) {
   const styles =
-    tone === "good" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-    : tone === "warn" ? "border-amber-400/30 bg-amber-400/10 text-amber-300"
-    : "border-rose-500/30 bg-rose-500/10 text-rose-300";
+    tone === "good" ? "surface-success"
+    : tone === "warn" ? "surface-warning"
+    : "surface-destructive";
   return (
     <div className={cn("flex items-center justify-between rounded-lg border px-2.5 py-1.5", styles)}>
       <span className="text-[10.5px] uppercase tracking-wider opacity-80">{label}</span>
