@@ -196,7 +196,15 @@ function TrendsCenter() {
               <span className="status-dot-destructive" aria-hidden />
               Live · {new Date().toLocaleDateString("es")}
             </Badge>
-            <Button size="sm" className="gap-1.5">
+            <Button
+              size="sm"
+              className="gap-1.5"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Wand2 className="h-3.5 w-3.5" /> Crear desde tendencia
             </Button>
           </>
