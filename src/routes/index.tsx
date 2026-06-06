@@ -394,7 +394,7 @@ function StatusCard({
 }) {
   return (
     <div
-      className="surface-card hover-lift relative overflow-hidden p-5 animate-fade-in"
+      className="surface-card hover-lift motion-fade-in relative overflow-hidden p-5"
       style={{ animationDelay: `${delay}ms` }}
     >
       {accent ? <div className="ambient-blob -right-10 -top-10 h-40 w-40 bg-primary" /> : null}
