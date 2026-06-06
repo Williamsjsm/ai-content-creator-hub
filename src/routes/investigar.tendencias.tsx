@@ -364,12 +364,12 @@ function NicheCard({ n }: { n: Niche }) {
           <p className="mt-0.5 line-clamp-2 text-[12px] text-muted-foreground">{n.description}</p>
         </div>
         <div className="space-y-2">
-          <Meter label="Potencial"   value={n.potential}   tone="emerald" />
-          <Meter label="Competencia" value={n.competition} tone="amber" />
+          <Meter label="Potencial"   value={n.potential}   tone="success" />
+          <Meter label="Competencia" value={n.competition} tone="warning" />
         </div>
         <div className="flex items-center justify-between border-t border-border/50 pt-3">
           <Badge variant="secondary" className="rounded-full text-[10px] font-normal">
-            <Flame className="mr-1 h-3 w-3 text-rose-400" /> Tendencia ascendente
+            <Flame className="mr-1 h-3 w-3 text-destructive" /> Tendencia ascendente
           </Badge>
           <Button size="sm" variant="ghost" className="h-7 gap-1 px-2 text-[12px]">
             Explorar <ChevronRight className="h-3 w-3" />
@@ -380,8 +380,8 @@ function NicheCard({ n }: { n: Niche }) {
   );
 }
 
-function Meter({ label, value, tone }: { label: string; value: number; tone: "emerald" | "amber" | "primary" }) {
-  const color = tone === "emerald" ? "bg-emerald-500" : tone === "amber" ? "bg-amber-400" : "bg-primary";
+function Meter({ label, value, tone }: { label: string; value: number; tone: "success" | "warning" | "primary" }) {
+  const color = tone === "success" ? "bg-success" : tone === "warning" ? "bg-warning" : "bg-primary";
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between text-[11px]">
