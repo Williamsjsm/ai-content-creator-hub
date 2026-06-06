@@ -458,7 +458,7 @@ function RecommendationRow({ r }: { r: Recommendation }) {
         <h3 className="text-[14px] font-semibold leading-snug">{r.text}</h3>
         <p className="mt-0.5 text-[12px] text-muted-foreground">{r.insight}</p>
       </div>
-      <Badge variant="secondary" className="hidden shrink-0 rounded-full bg-emerald-500/10 text-[11px] font-medium text-emerald-300 ring-1 ring-emerald-500/20 sm:inline-flex">
+      <Badge variant="success" className="hidden shrink-0 rounded-full text-[11px] font-medium sm:inline-flex">
         {r.metric}
       </Badge>
       <Button size="icon" variant="ghost" className="h-8 w-8">
