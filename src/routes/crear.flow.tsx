@@ -142,11 +142,8 @@ function FlowCenter() {
         subtitle="Estudio cinematográfico para generar, extender y refinar tus videos con IA."
         actions={
           <>
-            <Badge
-              variant="outline"
-              className="gap-1.5 border-border/60 bg-card/60 px-2.5 py-1 text-xs font-medium text-muted-foreground"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_theme(colors.emerald.400)]" />
+            <Badge variant="success" className="gap-1.5 px-2.5 py-1 text-xs font-medium">
+              <span className="status-dot-success" aria-hidden />
               Motor Flow online
             </Badge>
             <Button size="sm" variant="outline" className="gap-1.5">
