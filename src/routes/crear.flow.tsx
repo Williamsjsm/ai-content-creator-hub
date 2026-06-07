@@ -392,13 +392,13 @@ function FlowCenter() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="sm" variant="outline" className="gap-1.5">
+                <Button size="sm" variant="outline" className="gap-1.5" onClick={notifyPending}>
                   <FastForward className="h-3.5 w-3.5" /> Extender 8s
                 </Button>
-                <Button size="sm" variant="outline" className="gap-1.5">
+                <Button size="sm" variant="outline" className="gap-1.5" onClick={notifyPending}>
                   <Palette className="h-3.5 w-3.5" /> Color grade
                 </Button>
-                <Button size="sm" className="gap-1.5">
+                <Button size="sm" className="gap-1.5" onClick={notifyPending}>
                   <Download className="h-3.5 w-3.5" /> Exportar
                 </Button>
               </div>
@@ -411,7 +411,7 @@ function FlowCenter() {
               <CardTitle className="flex items-center gap-2 text-sm font-semibold">
                 <Film className="h-4 w-4 text-primary" /> Timeline · frames clave
               </CardTitle>
-              <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs">
+              <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs" onClick={notifyPending}>
                 Continuar desde frame <ChevronRight className="h-3 w-3" />
               </Button>
             </CardHeader>
