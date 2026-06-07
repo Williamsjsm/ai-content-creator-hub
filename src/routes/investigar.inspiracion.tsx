@@ -142,6 +142,17 @@ function InspiracionPage() {
   const [tab, setTab] = useState<TabId>("viral");
   const items = useMemo(() => DATA[tab], [tab]);
   const total = useMemo(() => Object.values(DATA).reduce((n, arr) => n + arr.length, 0), []);
+  const inspirationHook = useInspiration();
+
+  if (inspirationHook.isLoading) {
+    return <div className="p-6 lg:p-10"><LoadingState label="Cargando inspiración…" /></div>;
+  }
+  if (inspirationHook.error) {
+    return <div className="p-6 lg:p-10"><ErrorState /></div>;
+  }
+  if (inspirationHook.isEmpty) {
+    return <div className="p-6 lg:p-10"><EmptyState title="Sin referencias" description="Aún no tienes ideas guardadas." icon={Sparkles} /></div>;
+  }
 
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-6 p-6 lg:p-10">
@@ -155,12 +166,21 @@ function InspiracionPage() {
               <span className="font-medium text-foreground">{total}</span>
               <span>referencias</span>
             </div>
-            <Button size="sm" className="gap-1.5">
+            <Button
+              size="sm"
+              className="gap-1.5"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Wand2 className="h-3.5 w-3.5" /> Generar inspiración
             </Button>
           </>
         }
       />
+
 
       {/* Tabs */}
       <div className="-mx-1 overflow-x-auto">
