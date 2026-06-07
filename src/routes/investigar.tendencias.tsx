@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +14,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FlowConnector } from "@/components/flow-connector";
+import { useTrends } from "@/hooks/use-trends";
+import { LoadingState } from "@/components/state/loading-state";
+import { ErrorState } from "@/components/state/error-state";
+import { EmptyState } from "@/components/state/empty-state";
 
 export const Route = createFileRoute("/investigar/tendencias")({
   head: () => ({
@@ -47,11 +52,11 @@ const platformColor: Record<Platform, string> = {
   Instagram: "from-[#F58529] via-[#DD2A7B] to-[#8134AF]",
 };
 
-const viralityMeta: Record<Virality, { label: string; dot: string; ring: string; text: string }> = {
-  bajo:      { label: "Bajo",      dot: "bg-emerald-500",  ring: "ring-emerald-500/30",  text: "text-emerald-400" },
-  medio:     { label: "Medio",     dot: "bg-amber-400",    ring: "ring-amber-400/30",    text: "text-amber-300" },
-  alto:      { label: "Alto",      dot: "bg-orange-500",   ring: "ring-orange-500/30",   text: "text-orange-400" },
-  explosivo: { label: "Explosivo", dot: "bg-rose-500",     ring: "ring-rose-500/40",     text: "text-rose-400" },
+const viralityMeta: Record<Virality, { label: string; dot: string; text: string }> = {
+  bajo:      { label: "Bajo",      dot: "status-dot-success",     text: "text-success" },
+  medio:     { label: "Medio",     dot: "status-dot-warning",     text: "text-warning" },
+  alto:      { label: "Alto",      dot: "status-dot-warning",     text: "text-warning" },
+  explosivo: { label: "Explosivo", dot: "status-dot-destructive", text: "text-destructive" },
 };
 
 interface Trend {
@@ -161,12 +166,24 @@ function TrendsCenter() {
   const [period, setPeriod] = useState<string>("7 días");
   const [category, setCategory] = useState<Category | "Todas">("Todas");
 
+  const trendsHook = useTrends();
+
   const filteredTrends = useMemo(() => {
     return TRENDS.filter((t) =>
       (platform === "Todas" || t.platform === platform) &&
       (category === "Todas" || t.category === category)
     );
   }, [platform, category]);
+
+  if (trendsHook.isLoading) {
+    return <div className="p-6 lg:p-10"><LoadingState label="Cargando tendencias…" /></div>;
+  }
+  if (trendsHook.error) {
+    return <div className="p-6 lg:p-10"><ErrorState /></div>;
+  }
+  if (trendsHook.isEmpty) {
+    return <div className="p-6 lg:p-10"><EmptyState title="Sin tendencias" description="Aún no hay tendencias para mostrar." icon={Flame} /></div>;
+  }
 
   return (
     <div className="mx-auto w-full max-w-[1600px] space-y-6 p-6 lg:p-10">
@@ -175,14 +192,19 @@ function TrendsCenter() {
         subtitle="Descubre contenido viral y oportunidades de creación para TikTok, YouTube, Facebook e Instagram."
         actions={
           <>
-            <Badge className="hidden h-8 items-center gap-1.5 rounded-full border-0 bg-gradient-to-r from-rose-500/20 to-orange-500/20 px-3 text-rose-300 sm:inline-flex">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-rose-500" />
-              </span>
+            <Badge variant="destructive" className="hidden h-8 items-center gap-1.5 rounded-full px-3 sm:inline-flex motion-pop">
+              <span className="status-dot-destructive" aria-hidden />
               Live · {new Date().toLocaleDateString("es")}
             </Badge>
-            <Button size="sm" className="gap-1.5">
+            <Button
+              size="sm"
+              className="gap-1.5"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Wand2 className="h-3.5 w-3.5" /> Crear desde tendencia
             </Button>
           </>
@@ -284,7 +306,7 @@ function TabTrigger({ value, icon: Icon, children }: { value: string; icon: type
 function ViralityPill({ v }: { v: Virality }) {
   const m = viralityMeta[v];
   return (
-    <span className={cn("inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-black/40 px-2 py-0.5 text-[10.5px] font-medium backdrop-blur-md ring-1", m.ring, m.text)}>
+    <span className={cn("inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-black/40 px-2 py-0.5 text-[10.5px] font-medium backdrop-blur-md", m.text)}>
       <span className={cn("h-1.5 w-1.5 rounded-full", m.dot)} />
       {m.label}
     </span>
@@ -326,7 +348,7 @@ function TrendCard({ t }: { t: Trend }) {
           <Badge className="border-0 bg-black/60 text-[10px] text-white backdrop-blur-md">{t.duration}</Badge>
           <div className="flex items-center gap-2 text-[11px] text-white/95">
             <span className="flex items-center gap-1"><Eye className="h-3 w-3" /> {t.views}</span>
-            <span className="flex items-center gap-1 text-emerald-300"><ArrowUpRight className="h-3 w-3" /> {t.growth}</span>
+            <span className="flex items-center gap-1 text-success"><ArrowUpRight className="h-3 w-3" /> {t.growth}</span>
           </div>
         </div>
       </div>
@@ -356,7 +378,7 @@ function NicheCard({ n }: { n: Niche }) {
         <div className="absolute top-3 left-3 flex items-center gap-1.5">
           <Badge className="border-0 bg-black/50 text-[10px] text-white backdrop-blur-md">{n.category}</Badge>
         </div>
-        <div className="absolute bottom-2 right-3 flex items-baseline gap-1 text-emerald-300">
+        <div className="absolute bottom-2 right-3 flex items-baseline gap-1 text-success">
           <ArrowUpRight className="h-4 w-4" />
           <span className="text-[20px] font-bold tabular-nums">+{n.growth}%</span>
         </div>
@@ -367,12 +389,12 @@ function NicheCard({ n }: { n: Niche }) {
           <p className="mt-0.5 line-clamp-2 text-[12px] text-muted-foreground">{n.description}</p>
         </div>
         <div className="space-y-2">
-          <Meter label="Potencial"   value={n.potential}   tone="emerald" />
-          <Meter label="Competencia" value={n.competition} tone="amber" />
+          <Meter label="Potencial"   value={n.potential}   tone="success" />
+          <Meter label="Competencia" value={n.competition} tone="warning" />
         </div>
         <div className="flex items-center justify-between border-t border-border/50 pt-3">
           <Badge variant="secondary" className="rounded-full text-[10px] font-normal">
-            <Flame className="mr-1 h-3 w-3 text-rose-400" /> Tendencia ascendente
+            <Flame className="mr-1 h-3 w-3 text-destructive" /> Tendencia ascendente
           </Badge>
           <Button size="sm" variant="ghost" className="h-7 gap-1 px-2 text-[12px]">
             Explorar <ChevronRight className="h-3 w-3" />
@@ -383,8 +405,8 @@ function NicheCard({ n }: { n: Niche }) {
   );
 }
 
-function Meter({ label, value, tone }: { label: string; value: number; tone: "emerald" | "amber" | "primary" }) {
-  const color = tone === "emerald" ? "bg-emerald-500" : tone === "amber" ? "bg-amber-400" : "bg-primary";
+function Meter({ label, value, tone }: { label: string; value: number; tone: "success" | "warning" | "primary" }) {
+  const color = tone === "success" ? "bg-success" : tone === "warning" ? "bg-warning" : "bg-primary";
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between text-[11px]">
@@ -439,11 +461,11 @@ function OpportunityCard({ o }: { o: Opportunity }) {
 
 function StatChip({ label, value, tone }: { label: string; value: string; tone: "good" | "warn" | "bad" }) {
   const styles =
-    tone === "good" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-    : tone === "warn" ? "border-amber-400/30 bg-amber-400/10 text-amber-300"
-    : "border-rose-500/30 bg-rose-500/10 text-rose-300";
+    tone === "good" ? "surface-success"
+    : tone === "warn" ? "surface-warning"
+    : "surface-destructive";
   return (
-    <div className={cn("flex items-center justify-between rounded-lg border px-2.5 py-1.5", styles)}>
+    <div className={cn("flex items-center justify-between rounded-lg px-2.5 py-1.5", styles)}>
       <span className="text-[10.5px] uppercase tracking-wider opacity-80">{label}</span>
       <span className="text-[11.5px] font-semibold">{value}</span>
     </div>
@@ -461,7 +483,7 @@ function RecommendationRow({ r }: { r: Recommendation }) {
         <h3 className="text-[14px] font-semibold leading-snug">{r.text}</h3>
         <p className="mt-0.5 text-[12px] text-muted-foreground">{r.insight}</p>
       </div>
-      <Badge variant="secondary" className="hidden shrink-0 rounded-full bg-emerald-500/10 text-[11px] font-medium text-emerald-300 ring-1 ring-emerald-500/20 sm:inline-flex">
+      <Badge variant="success" className="hidden shrink-0 rounded-full text-[11px] font-medium sm:inline-flex">
         {r.metric}
       </Badge>
       <Button size="icon" variant="ghost" className="h-8 w-8">
@@ -501,7 +523,7 @@ function WidgetTrendOfDay() {
         </div>
       </div>
       <h4 className="line-clamp-2 text-[13px] font-semibold">{t.title}</h4>
-      <div className="mt-1 flex items-center gap-1 text-[11px] text-emerald-400">
+      <div className="mt-1 flex items-center gap-1 text-[11px] text-success">
         <ArrowUpRight className="h-3 w-3" /> {t.growth} en 24h
       </div>
     </WidgetCard>
@@ -522,7 +544,7 @@ function WidgetTopCategory() {
           <div key={i.label} className="space-y-1">
             <div className="flex items-center justify-between text-[12px]">
               <span className="flex items-center gap-2">
-                <span className={cn("h-1.5 w-1.5 rounded-full", idx === 0 ? "bg-rose-500" : idx === 1 ? "bg-orange-400" : idx === 2 ? "bg-amber-300" : "bg-emerald-400")} />
+                <span className={cn("h-1.5 w-1.5 rounded-full", idx === 0 ? "bg-destructive" : idx === 1 ? "bg-warning" : idx === 2 ? "bg-warning/70" : "bg-success")} />
                 {i.label}
               </span>
               <span className="text-muted-foreground tabular-nums">{i.pct}%</span>

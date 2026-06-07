@@ -128,9 +128,9 @@ function PromptsGenerator() {
                     <Button size="icon" variant="ghost" onClick={() => { navigator.clipboard.writeText(result); toast.success("Copiado"); }}>
                       <Copy className="h-4 w-4" />
                     </Button>
-                    <Button size="icon" variant="ghost"><Save className="h-4 w-4" /></Button>
-                    <Button size="icon" variant="ghost"><Pencil className="h-4 w-4" /></Button>
-                    <Button size="icon" variant="ghost"><Heart className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="ghost" onClick={() => toast("Función preparada para integración futura", { description: "Disponible cuando se conecte la API real." })}><Save className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="ghost" onClick={() => toast("Función preparada para integración futura", { description: "Disponible cuando se conecte la API real." })}><Pencil className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="ghost" onClick={() => toast("Función preparada para integración futura", { description: "Disponible cuando se conecte la API real." })}><Heart className="h-4 w-4" /></Button>
                   </div>
                 </CardHeader>
                 <CardContent>

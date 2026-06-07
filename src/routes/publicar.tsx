@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FlowConnector } from "@/components/flow-connector";
+import { usePublishing } from "@/hooks/use-publishing";
+import { LoadingState } from "@/components/state/loading-state";
+import { ErrorState } from "@/components/state/error-state";
+import { EmptyState } from "@/components/state/empty-state";
 
 export const Route = createFileRoute("/publicar")({
   head: () => ({
@@ -162,21 +167,40 @@ function CentroPublicacion() {
     [],
   );
 
+  const publishingHook = usePublishing();
+
+  if (publishingHook.isLoading) {
+    return <div className="p-6 lg:p-10"><LoadingState label="Cargando publicaciones…" /></div>;
+  }
+  if (publishingHook.error) {
+    return <div className="p-6 lg:p-10"><ErrorState /></div>;
+  }
+  if (publishingHook.isEmpty) {
+    return <div className="p-6 lg:p-10"><EmptyState title="Sin publicaciones" description="Programa tu primera publicación." icon={Send} /></div>;
+  }
+
   return (
     <div className="mx-auto w-full max-w-7xl space-y-8 p-6 lg:p-10">
       <PageHeader
         title="Centro de Publicación"
         subtitle="Publica, programa y analiza tu contenido en TikTok, Instagram, Facebook y YouTube desde un solo lugar."
         actions={
-          <Button className="gap-2">
+          <Button
+            className="gap-2"
+            onClick={() =>
+              toast("Función preparada para integración futura", {
+                description: "Disponible cuando se conecte la API real.",
+              })
+            }
+          >
             <Send className="h-4 w-4" /> Nueva publicación
           </Button>
         }
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard icon={CalendarClock} label="Programadas" value={`${stats.scheduled}`} accent="text-sky-400" />
-        <StatCard icon={CheckCircle2} label="Publicadas este mes" value={`${stats.published}`} accent="text-emerald-400" />
+        <StatCard icon={CalendarClock} label="Programadas" value={`${stats.scheduled}`} accent="text-info" />
+        <StatCard icon={CheckCircle2} label="Publicadas este mes" value={`${stats.published}`} accent="text-success" />
         <StatCard icon={Sparkles} label="Alcance total" value={stats.reach} accent="text-primary" />
       </div>
 
@@ -312,7 +336,7 @@ function Composer({
                   className={cn(
                     "flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium transition-all",
                     active
-                      ? "border-primary/60 bg-primary/10 text-foreground shadow-[var(--shadow-soft)]"
+                      ? "border-primary bg-[image:var(--gradient-primary)]/15 text-foreground shadow-[var(--shadow-soft)]"
                       : "border-border/60 text-muted-foreground hover:border-border hover:text-foreground",
                   )}
                 >
@@ -358,10 +382,26 @@ function Composer({
         )}
 
         <div className="flex items-center justify-between border-t border-border/50 pt-4">
-          <Button variant="ghost" className="gap-2 text-muted-foreground">
+          <Button
+            variant="ghost"
+            className="gap-2 text-muted-foreground"
+            onClick={() =>
+              toast("Función preparada para integración futura", {
+                description: "Disponible cuando se conecte la API real.",
+              })
+            }
+          >
             <Sparkles className="h-4 w-4" /> Sugerir mejor horario
           </Button>
-          <Button className="gap-2" disabled={selected.length === 0}>
+          <Button
+            className="gap-2"
+            disabled={selected.length === 0}
+            onClick={() =>
+              toast("Función preparada para integración futura", {
+                description: "Disponible cuando se conecte la API real.",
+              })
+            }
+          >
             {mode === "now" ? (
               <><Send className="h-4 w-4" /> Publicar ahora</>
             ) : (

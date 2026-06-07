@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -128,6 +129,11 @@ const versions = [
 
 // ────────────────────────────── Page ─────────────────────────────────
 
+const notifyPending = () =>
+  toast("Función preparada para integración futura", {
+    description: "Disponible cuando se conecte la API real.",
+  });
+
 function FlowCenter() {
   const [active, setActive] = useState("create");
   const [selected, setSelected] = useState("v7");
@@ -142,19 +148,30 @@ function FlowCenter() {
         subtitle="Estudio cinematográfico para generar, extender y refinar tus videos con IA."
         actions={
           <>
-            <Badge
-              variant="outline"
-              className="gap-1.5 border-border/60 bg-card/60 px-2.5 py-1 text-xs font-medium text-muted-foreground"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_theme(colors.emerald.400)]" />
+            <Badge variant="success" className="gap-1.5 px-2.5 py-1 text-xs font-medium">
+              <span className="status-dot-success" aria-hidden />
               Motor Flow online
             </Badge>
-            <Button size="sm" variant="outline" className="gap-1.5">
+            <Button
+              size="sm"
+              variant="outline"
+              className="gap-1.5"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Share2 className="h-3.5 w-3.5" /> Compartir
             </Button>
             <Button
               size="sm"
               className="gap-1.5 bg-[image:var(--gradient-primary)] text-primary-foreground hover:opacity-90"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
             >
               <Sparkles className="h-3.5 w-3.5" /> Nueva generación
             </Button>
@@ -173,7 +190,7 @@ function FlowCenter() {
               className={[
                 "group relative flex items-center gap-3 rounded-xl border p-3 text-left transition-all",
                 isActive
-                  ? "border-primary/50 bg-[image:var(--gradient-primary)]/10 shadow-[0_0_0_1px_hsl(var(--primary)/0.25),0_8px_32px_-12px_hsl(var(--primary)/0.4)]"
+                  ? "border-primary bg-[image:var(--gradient-primary)]/10 shadow-[var(--shadow-glow)]"
                   : "border-border/60 bg-card/60 hover:border-border hover:bg-card",
               ].join(" ")}
             >
@@ -262,7 +279,7 @@ function FlowCenter() {
                     className={[
                       "rounded-md border px-2 py-1.5 text-[11px] font-medium transition",
                       i === 3
-                        ? "border-primary/50 bg-primary/10 text-primary"
+                        ? "border-primary bg-[image:var(--gradient-primary)]/15 text-primary"
                         : "border-border/60 bg-background/40 text-muted-foreground hover:bg-background/80",
                     ].join(" ")}
                   >
@@ -306,7 +323,14 @@ function FlowCenter() {
               />
             </div>
 
-            <Button className="h-10 w-full gap-2 bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[0_8px_24px_-8px_hsl(var(--primary)/0.6)] hover:opacity-90">
+            <Button
+              className="h-10 w-full gap-2 bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-glow)] hover:opacity-90"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Sparkles className="h-4 w-4" /> Generar
             </Button>
           </CardContent>
@@ -329,7 +353,7 @@ function FlowCenter() {
               {/* Top bar */}
               <div className="absolute left-0 right-0 top-0 flex items-center justify-between px-4 py-3">
                 <Badge className="gap-1.5 border-white/10 bg-black/40 text-[11px] text-white backdrop-blur-md">
-                  <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-destructive" />
                   REC · {current.id.toUpperCase()}
                 </Badge>
                 <Badge className="border-white/10 bg-black/40 text-[11px] text-white backdrop-blur-md">
@@ -373,13 +397,13 @@ function FlowCenter() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="sm" variant="outline" className="gap-1.5">
+                <Button size="sm" variant="outline" className="gap-1.5" onClick={notifyPending}>
                   <FastForward className="h-3.5 w-3.5" /> Extender 8s
                 </Button>
-                <Button size="sm" variant="outline" className="gap-1.5">
+                <Button size="sm" variant="outline" className="gap-1.5" onClick={notifyPending}>
                   <Palette className="h-3.5 w-3.5" /> Color grade
                 </Button>
-                <Button size="sm" className="gap-1.5">
+                <Button size="sm" className="gap-1.5" onClick={notifyPending}>
                   <Download className="h-3.5 w-3.5" /> Exportar
                 </Button>
               </div>
@@ -392,7 +416,7 @@ function FlowCenter() {
               <CardTitle className="flex items-center gap-2 text-sm font-semibold">
                 <Film className="h-4 w-4 text-primary" /> Timeline · frames clave
               </CardTitle>
-              <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs">
+              <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs" onClick={notifyPending}>
                 Continuar desde frame <ChevronRight className="h-3 w-3" />
               </Button>
             </CardHeader>
@@ -469,7 +493,7 @@ function FlowCenter() {
                     ),
                   )}
                 </div>
-                <Button size="sm" variant="outline" className="w-full gap-1.5">
+                <Button size="sm" variant="outline" className="w-full gap-1.5" onClick={notifyPending}>
                   <Wand2 className="h-3.5 w-3.5" /> Mejorar prompt
                 </Button>
               </TabsContent>
@@ -489,7 +513,7 @@ function FlowCenter() {
                           className={[
                             "flex w-full items-center gap-3 rounded-lg border p-2 text-left transition",
                             isSel
-                              ? "border-primary/50 bg-primary/5"
+                              ? "border-primary bg-[image:var(--gradient-primary)]/10"
                               : "border-border/60 bg-background/40 hover:bg-background/80",
                           ].join(" ")}
                         >
@@ -533,7 +557,7 @@ function FlowCenter() {
                     className={[
                       "flex items-start gap-3 rounded-lg border p-3 transition",
                       v.current
-                        ? "border-primary/50 bg-primary/5"
+                        ? "border-primary bg-[image:var(--gradient-primary)]/10"
                         : "border-border/60 bg-background/40 hover:bg-background/70",
                     ].join(" ")}
                   >

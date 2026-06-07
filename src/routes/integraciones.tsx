@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -105,30 +106,26 @@ interface Automation {
 }
 
 const automations: Automation[] = [
-  { id: "gen-prompt", title: "Generar Prompt automáticamente", description: "Crea prompts optimizados a partir de una tendencia detectada.", icon: Wand2, accent: "text-amber-400" },
-  { id: "send-flow", title: "Enviar a Flow", description: "Convierte un prompt aprobado en un video dentro de Flow Center.", icon: ArrowRightLeft, accent: "text-sky-400" },
-  { id: "save-library", title: "Guardar en Biblioteca", description: "Archiva resultados generados en la carpeta del proyecto activo.", icon: Library, accent: "text-emerald-400" },
-  { id: "schedule", title: "Programar publicación", description: "Agenda la publicación en redes en el mejor horario sugerido.", icon: CalendarClock, accent: "text-violet-400" },
+  { id: "gen-prompt", title: "Generar Prompt automáticamente", description: "Crea prompts optimizados a partir de una tendencia detectada.", icon: Wand2, accent: "text-warning" },
+  { id: "send-flow", title: "Enviar a Flow", description: "Convierte un prompt aprobado en un video dentro de Flow Center.", icon: ArrowRightLeft, accent: "text-info" },
+  { id: "save-library", title: "Guardar en Biblioteca", description: "Archiva resultados generados en la carpeta del proyecto activo.", icon: Library, accent: "text-success" },
+  { id: "schedule", title: "Programar publicación", description: "Agenda la publicación en redes en el mejor horario sugerido.", icon: CalendarClock, accent: "text-primary" },
 ];
 
 // ============ Helpers ============
 function StatusPill({ status }: { status: Status }) {
+  if (status === "connected") {
+    return (
+      <Badge variant="success" className="gap-1.5 font-medium">
+        <span className="status-dot-success" aria-hidden />
+        Conectado
+      </Badge>
+    );
+  }
   return (
-    <Badge
-      className={cn(
-        "gap-1.5 border-transparent font-medium",
-        status === "connected"
-          ? "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/20"
-          : "bg-muted text-muted-foreground hover:bg-muted",
-      )}
-    >
-      <span
-        className={cn(
-          "h-1.5 w-1.5 rounded-full",
-          status === "connected" ? "bg-emerald-400 animate-pulse" : "bg-muted-foreground/60",
-        )}
-      />
-      {status === "connected" ? "Conectado" : "Desconectado"}
+    <Badge variant="soft" className="gap-1.5 font-medium">
+      <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" aria-hidden />
+      Desconectado
     </Badge>
   );
 }
@@ -192,7 +189,14 @@ function CentroIntegraciones() {
           title="Centro de Integraciones"
           subtitle="Centraliza todas las herramientas externas de tu ecosistema creativo en un solo panel."
           actions={
-            <Button className="gap-2">
+            <Button
+              className="gap-2"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Plug className="h-4 w-4" /> Añadir integración
             </Button>
           }
@@ -200,10 +204,10 @@ function CentroIntegraciones() {
 
         {/* Quick overview */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <OverviewCard icon={PlugZap} label="APIs conectadas" value={`${stats.connected}`} accent="text-emerald-400" />
-          <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-amber-400" />
-          <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-sky-400" />
-          <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-emerald-400" />
+          <OverviewCard icon={PlugZap} label="APIs conectadas" value={`${stats.connected}`} accent="text-success" />
+          <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-warning" />
+          <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-info" />
+          <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-success" />
         </div>
 
         <Tabs defaultValue="ia" className="space-y-6">
@@ -318,10 +322,10 @@ function CentroIntegraciones() {
           {/* ---- Estado del Sistema ---- */}
           <TabsContent value="system" className="space-y-6">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <OverviewCard icon={CheckCircle2} label="APIs conectadas" value={`${stats.connected} / ${stats.total}`} accent="text-emerald-400" />
-              <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-amber-400" />
-              <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-sky-400" />
-              <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-emerald-400" />
+              <OverviewCard icon={CheckCircle2} label="APIs conectadas" value={`${stats.connected} / ${stats.total}`} accent="text-success" />
+              <OverviewCard icon={Clock} label="APIs pendientes" value={`${stats.pending}`} accent="text-warning" />
+              <OverviewCard icon={Activity} label="Último acceso" value="Hoy, 14:32" accent="text-info" />
+              <OverviewCard icon={Wifi} label="Estado general" value="Operativo" accent="text-success" />
             </div>
             <Card className="border-border/60 bg-card">
               <CardContent className="space-y-3 p-5">

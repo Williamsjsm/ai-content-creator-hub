@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,7 +21,16 @@ function Configuracion() {
         <CardContent className="space-y-4">
           <div className="space-y-1.5"><Label>Nombre</Label><Input placeholder="Tu nombre" /></div>
           <div className="space-y-1.5"><Label>Email</Label><Input type="email" placeholder="tu@email.com" /></div>
-          <Button className="bg-[image:var(--gradient-primary)] text-primary-foreground hover:opacity-90">Guardar cambios</Button>
+          <Button
+            className="bg-[image:var(--gradient-primary)] text-primary-foreground hover:opacity-90"
+            onClick={() =>
+              toast("Función preparada para integración futura", {
+                description: "Disponible cuando se conecte la API real.",
+              })
+            }
+          >
+            Guardar cambios
+          </Button>
         </CardContent>
       </Card>
       <Card className="border-border/60 bg-card">

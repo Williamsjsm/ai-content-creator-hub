@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FlowConnector } from "@/components/flow-connector";
+import { useInspiration } from "@/hooks/use-inspiration";
+import { LoadingState } from "@/components/state/loading-state";
+import { ErrorState } from "@/components/state/error-state";
+import { EmptyState } from "@/components/state/empty-state";
 
 export const Route = createFileRoute("/investigar/inspiracion")({
   head: () => ({
@@ -137,6 +142,17 @@ function InspiracionPage() {
   const [tab, setTab] = useState<TabId>("viral");
   const items = useMemo(() => DATA[tab], [tab]);
   const total = useMemo(() => Object.values(DATA).reduce((n, arr) => n + arr.length, 0), []);
+  const inspirationHook = useInspiration();
+
+  if (inspirationHook.isLoading) {
+    return <div className="p-6 lg:p-10"><LoadingState label="Cargando inspiración…" /></div>;
+  }
+  if (inspirationHook.error) {
+    return <div className="p-6 lg:p-10"><ErrorState /></div>;
+  }
+  if (inspirationHook.isEmpty) {
+    return <div className="p-6 lg:p-10"><EmptyState title="Sin referencias" description="Aún no tienes ideas guardadas." icon={Sparkles} /></div>;
+  }
 
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-6 p-6 lg:p-10">
@@ -150,12 +166,21 @@ function InspiracionPage() {
               <span className="font-medium text-foreground">{total}</span>
               <span>referencias</span>
             </div>
-            <Button size="sm" className="gap-1.5">
+            <Button
+              size="sm"
+              className="gap-1.5"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Wand2 className="h-3.5 w-3.5" /> Generar inspiración
             </Button>
           </>
         }
       />
+
 
       {/* Tabs */}
       <div className="-mx-1 overflow-x-auto">
@@ -238,9 +263,9 @@ function InspiracionPage() {
 // ============================================================
 
 function viralColor(v: number) {
-  if (v >= 90) return "text-rose-400";
-  if (v >= 80) return "text-amber-400";
-  if (v >= 70) return "text-emerald-400";
+  if (v >= 90) return "text-destructive";
+  if (v >= 80) return "text-warning";
+  if (v >= 70) return "text-success";
   return "text-muted-foreground";
 }
 
@@ -271,7 +296,7 @@ function InspirationCard({ item }: { item: InspirationItem }) {
           {/* Top-right actions (hover) */}
           <div className="absolute right-2 top-2 flex translate-y-1 items-center gap-1 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
             <IconBtn label="Favorito" active={fav} onClick={() => setFav((v) => !v)}>
-              <Heart className={cn("h-3.5 w-3.5", fav && "fill-rose-400 text-rose-400")} />
+              <Heart className={cn("h-3.5 w-3.5", fav && "fill-destructive text-destructive")} />
             </IconBtn>
             <IconBtn label="Guardar" active={saved} onClick={() => setSaved((v) => !v)}>
               <Bookmark className={cn("h-3.5 w-3.5", saved && "fill-primary text-primary")} />
@@ -447,7 +472,7 @@ function WidgetShortcut({
   return (
     <Link
       to={to}
-      className="surface-card group flex items-center gap-3 rounded-2xl border border-border/60 p-3.5 transition-all hover:border-primary/50"
+      className="surface-card group flex items-center gap-3 rounded-2xl p-3.5 transition-all hover:border-border"
     >
       <div
         className="flex h-11 w-11 flex-none items-center justify-center rounded-xl text-white shadow-[var(--shadow-soft)]"
