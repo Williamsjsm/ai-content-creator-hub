@@ -493,7 +493,7 @@ function FlowCenter() {
                     ),
                   )}
                 </div>
-                <Button size="sm" variant="outline" className="w-full gap-1.5">
+                <Button size="sm" variant="outline" className="w-full gap-1.5" onClick={notifyPending}>
                   <Wand2 className="h-3.5 w-3.5" /> Mejorar prompt
                 </Button>
               </TabsContent>
