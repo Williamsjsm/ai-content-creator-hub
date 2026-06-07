@@ -508,7 +508,7 @@ function FlowCenter() {
                           className={[
                             "flex w-full items-center gap-3 rounded-lg border p-2 text-left transition",
                             isSel
-                              ? "border-primary/50 bg-primary/5"
+                              ? "border-primary bg-[image:var(--gradient-primary)]/10"
                               : "border-border/60 bg-background/40 hover:bg-background/80",
                           ].join(" ")}
                         >
