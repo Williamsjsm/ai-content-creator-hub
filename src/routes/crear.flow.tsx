@@ -274,7 +274,7 @@ function FlowCenter() {
                     className={[
                       "rounded-md border px-2 py-1.5 text-[11px] font-medium transition",
                       i === 3
-                        ? "border-primary/50 bg-primary/10 text-primary"
+                        ? "border-primary bg-[image:var(--gradient-primary)]/15 text-primary"
                         : "border-border/60 bg-background/40 text-muted-foreground hover:bg-background/80",
                     ].join(" ")}
                   >
