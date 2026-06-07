@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Copy, Save, Pencil, Heart, Sparkles } from "lucide-react";
+import { Copy, Save, Pencil, Heart, Sparkles, Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Film } from "lucide-react";
 import { FlowConnector } from "@/components/flow-connector";
+import { useServerFn } from "@tanstack/react-start";
+import { useQueryClient } from "@tanstack/react-query";
+import { savePrompt } from "@/lib/prompts.functions";
 
 export const Route = createFileRoute("/crear/prompts")({
   head: () => ({ meta: [{ title: "Generador de Prompts — AI Content Studio" }] }),
