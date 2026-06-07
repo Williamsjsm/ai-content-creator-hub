@@ -23,10 +23,10 @@ export const Route = createFileRoute("/biblioteca/prompts")({
 });
 
 function matches(p: StoredPrompt, f: LibraryFilters) {
-  if (f.q && !`${p.title} ${p.excerpt}`.toLowerCase().includes(f.q.toLowerCase())) return false;
+  if (f.query && !`${p.title} ${p.excerpt}`.toLowerCase().includes(f.query.toLowerCase())) return false;
   if (f.platform !== "all" && p.platform !== f.platform) return false;
   if (f.category !== "all" && p.category !== f.category) return false;
-  if (f.favorite && !p.favorite) return false;
+  if (f.favoritesOnly && !p.favorite) return false;
   return true;
 }
 
