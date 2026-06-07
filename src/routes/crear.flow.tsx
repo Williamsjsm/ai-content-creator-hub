@@ -552,7 +552,7 @@ function FlowCenter() {
                     className={[
                       "flex items-start gap-3 rounded-lg border p-3 transition",
                       v.current
-                        ? "border-primary/50 bg-primary/5"
+                        ? "border-primary bg-[image:var(--gradient-primary)]/10"
                         : "border-border/60 bg-background/40 hover:bg-background/70",
                     ].join(" ")}
                   >
