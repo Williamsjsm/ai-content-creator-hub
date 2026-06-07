@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FlowConnector } from "@/components/flow-connector";
+import { useInspiration } from "@/hooks/use-inspiration";
+import { LoadingState } from "@/components/state/loading-state";
+import { ErrorState } from "@/components/state/error-state";
+import { EmptyState } from "@/components/state/empty-state";
 
 export const Route = createFileRoute("/investigar/inspiracion")({
   head: () => ({
