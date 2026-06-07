@@ -318,7 +318,14 @@ function FlowCenter() {
               />
             </div>
 
-            <Button className="h-10 w-full gap-2 bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[0_8px_24px_-8px_hsl(var(--primary)/0.6)] hover:opacity-90">
+            <Button
+              className="h-10 w-full gap-2 bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-glow)] hover:opacity-90"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Sparkles className="h-4 w-4" /> Generar
             </Button>
           </CardContent>
