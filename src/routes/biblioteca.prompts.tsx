@@ -1,8 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { LibraryShell, EmptyState } from "@/components/library-shell";
-import { LibraryToolbar, DEFAULT_FILTERS, matchesFilters, type ViewMode, type LibraryFilters } from "@/components/library-toolbar";
-import { PROMPTS, fmtDate, type PromptItem } from "@/lib/library-data";
+import { LibraryToolbar, DEFAULT_FILTERS, type ViewMode, type LibraryFilters } from "@/components/library-toolbar";
+import { fmtDate } from "@/lib/library-data";
+import { useLibraryPrompts } from "@/hooks/use-library-prompts";
+import type { StoredPrompt } from "@/lib/prompts.functions";
+import { LoadingState } from "@/components/state/loading-state";
+import { ErrorState } from "@/components/state/error-state";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -18,15 +22,28 @@ export const Route = createFileRoute("/biblioteca/prompts")({
   component: PromptsPage,
 });
 
+function matches(p: StoredPrompt, f: LibraryFilters) {
+  if (f.query && !`${p.title} ${p.excerpt}`.toLowerCase().includes(f.query.toLowerCase())) return false;
+  if (f.platform !== "all" && p.platform !== f.platform) return false;
+  if (f.category !== "all" && p.category !== f.category) return false;
+  if (f.favoritesOnly && !p.favorite) return false;
+  return true;
+}
+
 function PromptsPage() {
   const [view, setView] = useState<ViewMode>("grid");
   const [filters, setFilters] = useState<LibraryFilters>(DEFAULT_FILTERS);
-  const items = useMemo(() => PROMPTS.filter((p) => matchesFilters(p, filters)), [filters]);
+  const { data, isLoading, error, refetch } = useLibraryPrompts();
+  const items = useMemo(() => data.filter((p) => matches(p, filters)), [data, filters]);
 
   return (
-    <LibraryShell count={PROMPTS.length}>
+    <LibraryShell count={data.length}>
       <LibraryToolbar view={view} onViewChange={setView} filters={filters} onFiltersChange={setFilters} />
-      {items.length === 0 ? (
+      {isLoading ? (
+        <LoadingState label="Cargando prompts…" />
+      ) : error ? (
+        <ErrorState description={error.message} onRetry={refetch} />
+      ) : items.length === 0 ? (
         <EmptyState label="prompts" />
       ) : view === "grid" ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -44,6 +61,7 @@ function PromptsPage() {
     </LibraryShell>
   );
 }
+
 
 function PromptActions({ size = "sm" }: { size?: "sm" | "xs" }) {
   return (
