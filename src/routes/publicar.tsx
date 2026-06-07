@@ -180,8 +180,8 @@ function CentroPublicacion() {
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard icon={CalendarClock} label="Programadas" value={`${stats.scheduled}`} accent="text-sky-400" />
-        <StatCard icon={CheckCircle2} label="Publicadas este mes" value={`${stats.published}`} accent="text-emerald-400" />
+        <StatCard icon={CalendarClock} label="Programadas" value={`${stats.scheduled}`} accent="text-info" />
+        <StatCard icon={CheckCircle2} label="Publicadas este mes" value={`${stats.published}`} accent="text-success" />
         <StatCard icon={Sparkles} label="Alcance total" value={stats.reach} accent="text-primary" />
       </div>
 
