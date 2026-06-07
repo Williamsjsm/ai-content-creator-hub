@@ -382,10 +382,26 @@ function Composer({
         )}
 
         <div className="flex items-center justify-between border-t border-border/50 pt-4">
-          <Button variant="ghost" className="gap-2 text-muted-foreground">
+          <Button
+            variant="ghost"
+            className="gap-2 text-muted-foreground"
+            onClick={() =>
+              toast("Función preparada para integración futura", {
+                description: "Disponible cuando se conecte la API real.",
+              })
+            }
+          >
             <Sparkles className="h-4 w-4" /> Sugerir mejor horario
           </Button>
-          <Button className="gap-2" disabled={selected.length === 0}>
+          <Button
+            className="gap-2"
+            disabled={selected.length === 0}
+            onClick={() =>
+              toast("Función preparada para integración futura", {
+                description: "Disponible cuando se conecte la API real.",
+              })
+            }
+          >
             {mode === "now" ? (
               <><Send className="h-4 w-4" /> Publicar ahora</>
             ) : (
