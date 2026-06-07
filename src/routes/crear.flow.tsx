@@ -147,12 +147,26 @@ function FlowCenter() {
               <span className="status-dot-success" aria-hidden />
               Motor Flow online
             </Badge>
-            <Button size="sm" variant="outline" className="gap-1.5">
+            <Button
+              size="sm"
+              variant="outline"
+              className="gap-1.5"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
+            >
               <Share2 className="h-3.5 w-3.5" /> Compartir
             </Button>
             <Button
               size="sm"
               className="gap-1.5 bg-[image:var(--gradient-primary)] text-primary-foreground hover:opacity-90"
+              onClick={() =>
+                toast("Función preparada para integración futura", {
+                  description: "Disponible cuando se conecte la API real.",
+                })
+              }
             >
               <Sparkles className="h-3.5 w-3.5" /> Nueva generación
             </Button>
