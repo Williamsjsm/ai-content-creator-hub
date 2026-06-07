@@ -447,7 +447,7 @@ function WidgetShortcut({
   return (
     <Link
       to={to}
-      className="surface-card group flex items-center gap-3 rounded-2xl border border-border/60 p-3.5 transition-all hover:border-primary/50"
+      className="surface-card group flex items-center gap-3 rounded-2xl p-3.5 transition-all hover:border-border"
     >
       <div
         className="flex h-11 w-11 flex-none items-center justify-center rounded-xl text-white shadow-[var(--shadow-soft)]"
