@@ -129,6 +129,11 @@ const versions = [
 
 // ────────────────────────────── Page ─────────────────────────────────
 
+const notifyPending = () =>
+  toast("Función preparada para integración futura", {
+    description: "Disponible cuando se conecte la API real.",
+  });
+
 function FlowCenter() {
   const [active, setActive] = useState("create");
   const [selected, setSelected] = useState("v7");
