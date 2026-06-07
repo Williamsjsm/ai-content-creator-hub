@@ -167,13 +167,32 @@ function CentroPublicacion() {
     [],
   );
 
+  const publishingHook = usePublishing();
+
+  if (publishingHook.isLoading) {
+    return <div className="p-6 lg:p-10"><LoadingState label="Cargando publicaciones…" /></div>;
+  }
+  if (publishingHook.error) {
+    return <div className="p-6 lg:p-10"><ErrorState /></div>;
+  }
+  if (publishingHook.isEmpty) {
+    return <div className="p-6 lg:p-10"><EmptyState title="Sin publicaciones" description="Programa tu primera publicación." icon={Send} /></div>;
+  }
+
   return (
     <div className="mx-auto w-full max-w-7xl space-y-8 p-6 lg:p-10">
       <PageHeader
         title="Centro de Publicación"
         subtitle="Publica, programa y analiza tu contenido en TikTok, Instagram, Facebook y YouTube desde un solo lugar."
         actions={
-          <Button className="gap-2">
+          <Button
+            className="gap-2"
+            onClick={() =>
+              toast("Función preparada para integración futura", {
+                description: "Disponible cuando se conecte la API real.",
+              })
+            }
+          >
             <Send className="h-4 w-4" /> Nueva publicación
           </Button>
         }
