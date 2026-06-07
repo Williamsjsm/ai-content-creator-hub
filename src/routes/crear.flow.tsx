@@ -185,7 +185,7 @@ function FlowCenter() {
               className={[
                 "group relative flex items-center gap-3 rounded-xl border p-3 text-left transition-all",
                 isActive
-                  ? "border-primary/50 bg-[image:var(--gradient-primary)]/10 shadow-[0_0_0_1px_hsl(var(--primary)/0.25),0_8px_32px_-12px_hsl(var(--primary)/0.4)]"
+                  ? "border-primary bg-[image:var(--gradient-primary)]/10 shadow-[var(--shadow-glow)]"
                   : "border-border/60 bg-card/60 hover:border-border hover:bg-card",
               ].join(" ")}
             >
