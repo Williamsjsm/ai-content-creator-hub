@@ -326,7 +326,7 @@ function FlowCenter() {
               {/* Top bar */}
               <div className="absolute left-0 right-0 top-0 flex items-center justify-between px-4 py-3">
                 <Badge className="gap-1.5 border-white/10 bg-black/40 text-[11px] text-white backdrop-blur-md">
-                  <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-destructive" />
                   REC · {current.id.toUpperCase()}
                 </Badge>
                 <Badge className="border-white/10 bg-black/40 text-[11px] text-white backdrop-blur-md">
