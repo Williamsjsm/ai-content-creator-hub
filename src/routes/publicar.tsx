@@ -336,7 +336,7 @@ function Composer({
                   className={cn(
                     "flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium transition-all",
                     active
-                      ? "border-primary/60 bg-primary/10 text-foreground shadow-[var(--shadow-soft)]"
+                      ? "border-primary bg-[image:var(--gradient-primary)]/15 text-foreground shadow-[var(--shadow-soft)]"
                       : "border-border/60 text-muted-foreground hover:border-border hover:text-foreground",
                   )}
                 >
