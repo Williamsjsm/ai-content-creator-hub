@@ -81,7 +81,7 @@ function PromptActions({ size = "sm" }: { size?: "sm" | "xs" }) {
   );
 }
 
-function PromptCard({ p }: { p: PromptItem }) {
+function PromptCard({ p }: { p: StoredPrompt }) {
   return (
     <div className="surface-card hover-lift group flex flex-col p-5">
       <div className="flex items-start justify-between gap-2">
@@ -106,7 +106,7 @@ function PromptCard({ p }: { p: PromptItem }) {
   );
 }
 
-function PromptRow({ p }: { p: PromptItem }) {
+function PromptRow({ p }: { p: StoredPrompt }) {
   return (
     <div className="surface-card hover-lift flex items-center gap-4 p-4">
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/60">
@@ -127,7 +127,7 @@ function PromptRow({ p }: { p: PromptItem }) {
   );
 }
 
-function PromptCompact({ p }: { p: PromptItem }) {
+function PromptCompact({ p }: { p: StoredPrompt }) {
   return (
     <div className="flex items-center gap-3 px-4 py-2.5 hover:bg-accent/40 transition-colors">
       <FileText className="h-3.5 w-3.5 text-muted-foreground" />
