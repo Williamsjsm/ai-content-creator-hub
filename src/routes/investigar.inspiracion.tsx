@@ -271,7 +271,7 @@ function InspirationCard({ item }: { item: InspirationItem }) {
           {/* Top-right actions (hover) */}
           <div className="absolute right-2 top-2 flex translate-y-1 items-center gap-1 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
             <IconBtn label="Favorito" active={fav} onClick={() => setFav((v) => !v)}>
-              <Heart className={cn("h-3.5 w-3.5", fav && "fill-rose-400 text-rose-400")} />
+              <Heart className={cn("h-3.5 w-3.5", fav && "fill-destructive text-destructive")} />
             </IconBtn>
             <IconBtn label="Guardar" active={saved} onClick={() => setSaved((v) => !v)}>
               <Bookmark className={cn("h-3.5 w-3.5", saved && "fill-primary text-primary")} />
